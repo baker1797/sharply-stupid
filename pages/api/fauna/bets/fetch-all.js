@@ -31,7 +31,7 @@ export default async (req, res/*collection*/) => {
         
         res.status(200).json(dbRes)
         
-        return res.data
+        // return res.data
     })
     .catch((err) => {
         console.log('show all - catch')

@@ -52,21 +52,21 @@ export async function getStaticProps() {
   
   console.log('bets :: getStaticProps')
 
-  const res = await fetch('http://localhost:3000/api/fauna/fetch-all')
-  const data = await res.json()
+  let domain = 'http://sharply-stupid.heroku.com';
 
-  console.log(data)
+  if (process.env.NODE_ENV == 'development') {
+    domain = 'http://localhost:3000';
+    console.log('DEV MODE!')
+  } else {
+    console.log('not dev mode :(')
+  }
+
+  const endpointUrl = `${domain}/api/fauna/bets/fetch-all`
+
+  const res = await fetch(endpointUrl)
+  //console.log(res)
+  const data = await res.json()
+  //console.log(data)
 
   return { props: { data } }
-
-  // fetch('http://localhost:3000/api/fauna/fetch-all')
-  // .then((res) => {
-  //   console.log('in the fetch')
-  //   console.log(res)
-  //   res.json()
-  // })
-  // .then((data) => {
-  //   console.log(data)
-  //   thisdata = data
-  // })
 }
