@@ -50,13 +50,13 @@ export default function Schedules() {
         </h1>
         
         <Stack direction="row" spacing={2}>
-        {
+        {/* {
           props.matches.map((match, matchIndex) => {
             return (
               <MatchupCard {...match} key={matchIndex}></MatchupCard>
             )
           })
-        }
+        } */}
         </Stack>
       </main>
 

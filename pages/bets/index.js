@@ -53,6 +53,7 @@ export async function getStaticProps() {
   console.log('bets :: getStaticProps')
 
   let domain = 'http://sharply-stupid.heroku.com';
+  let data;
 
   if (process.env.NODE_ENV == 'development') {
     domain = 'http://localhost:3000';
@@ -63,10 +64,17 @@ export async function getStaticProps() {
 
   const endpointUrl = `${domain}/api/fauna/bets/fetch-all`
 
-  const res = await fetch(endpointUrl)
-  //console.log(res)
-  const data = await res.json()
-  //console.log(data)
+  try {
+    const res = await fetch(endpointUrl)
+    data = await res.json()
+
+    // console.log(data)
+  } catch (fetchError) {
+    // console.log(fetchError)
+    data = {
+      data: []
+    }
+  }
 
   return { props: { data } }
 }

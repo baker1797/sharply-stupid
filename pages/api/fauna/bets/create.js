@@ -3,7 +3,6 @@ import showAll from './fetch-all'
 
 export default async (req, res) => {
     try {
-        console.log('try - fauna')
         const q = faunadb.query;
 
         const client = new faunadb.Client({
@@ -15,8 +14,6 @@ export default async (req, res) => {
             domain: 'db.us.fauna.com',
             scheme: 'https',
         });
-
-        console.log('in the abyss')
 
         // const value = document.getElementById('todo').value
         let bet_id = new Date() + ""; // TODO: absolute hack of an ID
@@ -73,8 +70,8 @@ export default async (req, res) => {
         })
 
     } catch (err) {
-        console.log('error - fauna')
+        console.log('fauna :: error')
         console.log(err)
-        res.status(500).json({data: {test:'test'}})
+        res.status(500).json({data: {error: err}})
     }
 }
