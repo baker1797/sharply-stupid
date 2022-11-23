@@ -1,0 +1,1 @@
+export const CREATE_TABLE_MATCHES = 'CREATE TABLE matches (matchId int PK, team_id varchar(80));'

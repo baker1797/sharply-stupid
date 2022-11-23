@@ -1,4 +1,8 @@
 # Sharply Stupid
+* https://mui.com/material-ui/
+* https://nextjs.org/docs
+* https://heroku.com
+* https://dashboard.fauna.com/
 
 ## Running
 
