@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.5",
     "@mui/icons-material": "^5.10.15",
     "@mui/material": "^5.10.15",
     "eslint": "8.28.0",
     "eslint-config-next": "13.0.4",
     "faunadb": "^4.7.1",
+    "mui": "^0.0.1",
     "next": "13.0.4",
     "pg": "^8.8.0",
     "react": "^18.0.0",
