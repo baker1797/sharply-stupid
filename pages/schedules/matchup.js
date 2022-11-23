@@ -15,27 +15,12 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 export default function MatchupCard(props) {
   const { home, away, notes } = props;
 
-  const [checked, setChecked] = React.useState([0]);
-
-  const handleNoteUpdate = (note, index) => {
-    const currentIndex = checked.indexOf(index);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(index);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    // setChecked(newChecked);
-  };
-
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
 
         <Typography variant="h5" component="div">
-        {away.name}
+         {away.name}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
           @

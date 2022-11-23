@@ -2,18 +2,17 @@ import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
 import IconButton from '@mui/material/IconButton';
-import CommentIcon from '@mui/icons-material/Comment';
 import Typography from '@mui/material/Typography';
-import TextField from '@mui/material/TextField';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
 export default function BetCard({data}) {
-  const { 
+  if (!data) {
+    return 'busted';
+  }
+
+  const {
     bet_id,
     prop,
     prop_side,
