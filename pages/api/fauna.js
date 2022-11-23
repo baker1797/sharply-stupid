@@ -2,7 +2,7 @@ import faunadb from 'faunadb'
 
 export default async (req, res) => {
     try {
-        console.log('try - fauna')
+        console.log('fauna :: try')
         const q = faunadb.query;
 
         const client = new faunadb.Client({
@@ -15,8 +15,6 @@ export default async (req, res) => {
             scheme: 'https',
         });
 
-        console.log('in the abyss')
-
         client.query(
             q.If(
                 q.Exists(q.Collection('matches')),
@@ -24,22 +22,13 @@ export default async (req, res) => {
                 q.CreateCollection({ name: 'matches' })
             )
         ).then((dbResponse)=>{
-            console.log('checking for faunadb')
+            console.log('fauna :: handling dbResponse')
             console.log(dbResponse)
             res.status(200).json({data: {test:'test'}})
         })
-        console.log('out')
 
-        
-
-        // On first run, make sure that the Todos collection exists
-        // async () => {
-        //     console.log('checking for faunadb')
-        //     await 
-        //     res.status(200).json({data: {test:'test'}})
-        // }
     } catch (err) {
-        console.log('error - fauna')
+        console.log('fauna :: error')
         console.log(err)
     }
 }

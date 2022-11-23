@@ -15,6 +15,9 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 export default function MatchupCard(props) {
   const { home, away, notes } = props;
 
+  console.log(away)
+  console.log(home)
+
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
@@ -35,7 +38,7 @@ export default function MatchupCard(props) {
         */
         }
         <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          {console.log('booger',notes)}
+          {console.log('notes:',notes)}
           {notes.map((note, index) => {
             const labelId = `checkbox-list-label-${index}`;
 
@@ -55,7 +58,7 @@ export default function MatchupCard(props) {
                     label="Notes"
                     variant="outlined"
                     defaultValue={note.content}
-                    onSubmit={handleNoteUpdate(note, index)}/>
+                    />
                 </ListItemButton>
               </ListItem>
             );
@@ -70,7 +73,7 @@ export default function MatchupCard(props) {
         <IconButton edge="end" aria-label="comments">
           <BookmarkAddIcon />
         </IconButton>
-                  
+
       </CardActions>
     </Card>
   );
