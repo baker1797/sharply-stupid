@@ -12,7 +12,7 @@ import TextField from '@mui/material/TextField';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 
-export default function BetCard(props) {
+export default function BetCard({data}) {
   const { 
     bet_id,
     prop,
@@ -21,12 +21,22 @@ export default function BetCard(props) {
     prop_juice,
     maker,
     taker
-  } = props;
+  } = data;
+
+  console.log(data)
 
   return (
     <Card sx={{ minWidth: 275 }}>
       <CardContent>
 
+        {
+        /*
+          List of Bets
+        */
+        }
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          {/* {bet_id} */}
+        </Typography>
         <Typography variant="h5" component="div">
         {maker}
         </Typography>
@@ -36,41 +46,14 @@ export default function BetCard(props) {
         <Typography variant="h5" component="div">
           {taker}
         </Typography>
-
-        {
-        /*
-          List of Notes 
-        */
-        }
-        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-          {console.log('booger',notes)}
-          {notes.map((note, index) => {
-            const labelId = `checkbox-list-label-${index}`;
-
-            return (
-              <ListItem
-                key={`note-${index}`}
-                secondaryAction={
-                  <IconButton edge="end" aria-label="comments">
-                    <CommentIcon />
-                  </IconButton>
-                }
-                disablePadding
-              >
-                <ListItemButton role={undefined} dense>
-                  <TextField
-                    id="outlined-basic"
-                    label="Notes"
-                    variant="outlined"
-                    defaultValue={note.content}
-                    onSubmit={handleNoteUpdate(note, index)}/>
-                </ListItemButton>
-              </ListItem>
-            );
-          })}
-        </List>
-
+        <Typography sx={{ mb: 1.5 }} color="text.secondary">
+          {prop_side}
+          {/* <li>{prop_side}</li>
+          <li>{prop_value}</li>
+          <li>{prop_juice}</li> */}
+        </Typography>
       </CardContent>
+
       <CardActions>
         <IconButton edge="end" aria-label="comments">
           <VisibilityOffIcon />

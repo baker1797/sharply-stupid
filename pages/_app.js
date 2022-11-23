@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import { ThemeProvider } from '@material-ui/core/styles';
+// import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import MatchupCard from '/pages/schedules/matchup'
 // import theme from '../src/theme';
-
-import faunadb from 'faunadb'
-
-
 
 export default function MyApp(props) {
   const { Component, pageProps } = props;

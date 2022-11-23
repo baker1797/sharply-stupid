@@ -18,11 +18,9 @@ export default async (req, res) => {
 
         console.log('in the abyss')
 
-        // showAll(client, 'players')
-
         // const value = document.getElementById('todo').value
-        let bet_id = new Date();
-        let prop = "Cousins ints";
+        let bet_id = new Date() + ""; // TODO: absolute hack of an ID
+        let prop = "Date as string";
         let prop_side = "over";
         let prop_value = 0.5;
         let prop_juice = -120;

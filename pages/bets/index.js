@@ -2,43 +2,13 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Stack from '@mui/material/Stack';
 import styles from '../../styles/Home.module.css'
-import { useState, useEffect } from 'react'
-
 import MatchupCard from './bet'
-import useSWR from 'swr'
-
-export default function Bets() {
-
-  // const fetcher = ({week: '12'}) => fetch(...args).then((res) => res.json())
-
-  // const { data, error } = useSWR('/api/fauna/fetch-all', fetcher)
-
-  // console.log(data)
 
 
-  // const [data, setData] = useState(null)
-  // const [isLoading, setLoading] = useState(false)
+export default function Bets({ data }) {
 
-let thisdata = {}
-  // useEffect(() => {
-  //   setLoading(true)
-    fetch('http://localhost:3000/api/fauna/fetch-all')
-      .then((res) => {
-        console.log('in the fetch')
-        console.log(res)
-        res.json()
-      })
-      .then((data) => {
-        console.log(data)
-        thisdata = data
-        // setData(data)
-        // setLoading(false)
-      })
-  // }, [])
-
-  
-  console.log('after useEffect')
-  console.log(thisdata)
+  console.log('Bets :: render')
+  console.log(data)
 
   return (
     <div className={styles.container}>
@@ -49,18 +19,16 @@ let thisdata = {}
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Bets
-        </h1>
+        <h1 className={styles.title}>Bets</h1>
         
         <Stack direction="row" spacing={2}>
-        {/* {
-          isLoading ? null : data.map((match, matchIndex) => {
+        {
+          data.data.map((bet, betIndex) => {
             return (
-              <MatchupCard {...match} key={matchIndex}></MatchupCard>
+              <MatchupCard {...bet} key={betIndex}></MatchupCard>
             )
           })
-        } */}
+        }
         </Stack>
       </main>
 
@@ -78,4 +46,27 @@ let thisdata = {}
       </footer>
     </div>
   )
+}
+
+export async function getStaticProps() {
+  
+  console.log('bets :: getStaticProps')
+
+  const res = await fetch('http://localhost:3000/api/fauna/fetch-all')
+  const data = await res.json()
+
+  console.log(data)
+
+  return { props: { data } }
+
+  // fetch('http://localhost:3000/api/fauna/fetch-all')
+  // .then((res) => {
+  //   console.log('in the fetch')
+  //   console.log(res)
+  //   res.json()
+  // })
+  // .then((data) => {
+  //   console.log(data)
+  //   thisdata = data
+  // })
 }
