@@ -24,17 +24,18 @@ export default function MyApp(props) {
         <title>Home Page</title>
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
       </Head>
+      {/* <ThemeProvider theme={theme}> */}
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
+        <Component {...pageProps} />
+      {/* </ThemeProvider> */}
+
       <ul class="menu">
         <li><Link href="/">Home</Link></li>
         <li><Link href="/bets">View Bets</Link></li>
         <li><Link href="/api/fauna/bets/create">Create Bet</Link></li>
         <li><Link href="/api/fauna/bets/fetch-all">View Bets <i>(json)</i></Link></li>
       </ul>
-      {/* <ThemeProvider theme={theme}> */}
-        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <CssBaseline />
-        <Component {...pageProps} />
-      {/* </ThemeProvider> */}
     </React.Fragment>
   );
 }

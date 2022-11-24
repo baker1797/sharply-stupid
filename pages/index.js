@@ -13,28 +13,8 @@ export default function Home() {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to Sharply Stupid!</h1>
-
-        <ul>
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/bets">View Bets</Link></li>
-          <li><Link href="/api/fauna/bets/create">Create Bet</Link></li>
-          <li><Link href="/api/fauna/bets/fetch-all">View Bets <i>(json)</i></Link></li>
-        </ul>
+        <h1 className={styles.title}><i>Sharply</i> Stupid!</h1>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
     </div>
   )
 }

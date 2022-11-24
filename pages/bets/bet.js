@@ -28,8 +28,8 @@ export default function BetCard({data}) {
   console.log(data)
 
   return (
-    <Card sx={{ minWidth: 275 }}>
-      <CardContent sx={{ minheight: 275 }}>
+    <Card sx={{ minWidth: 150 }}>
+      <CardContent sx={{ minheight: 150 }}>
         <CardActions sx={{flexFlow: "row-reverse"}}>
           <IconButton edge="end" aria-label="comments">
             <BookmarkAddIcon />
