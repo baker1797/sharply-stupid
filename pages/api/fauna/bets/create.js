@@ -17,12 +17,12 @@ export default async (req, res) => {
 
         // const value = document.getElementById('todo').value
         let bet_id = new Date() + ""; // TODO: absolute hack of an ID
-        let prop = "Date as string";
-        let prop_side = "over";
-        let prop_value = 0.5;
-        let prop_juice = -120;
-        let maker = "stu";
-        let taker = null;
+        let prop = "Cousins total TDs";
+        let prop_side = "under";
+        let prop_value = 1.5;
+        let prop_juice = -145;
+        let maker = "Reid";
+        let taker = "Jody";
         
         await client.query(
             q.If(

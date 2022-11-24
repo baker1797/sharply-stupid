@@ -22,46 +22,37 @@ export default function BetCard({data}) {
     taker
   } = data;
 
+  var date = new Date(bet_id)
+  var datePrint = date.toLocaleString('default', { month: 'long' }) + ' ' + date.getDate()
+  
   console.log(data)
 
   return (
     <Card sx={{ minWidth: 275 }}>
-      <CardContent>
+      <CardContent sx={{ minheight: 275 }}>
+        <CardActions sx={{flexFlow: "row-reverse"}}>
+          <IconButton edge="end" aria-label="comments">
+            <BookmarkAddIcon />
+          </IconButton>
+        </CardActions>
 
-        {
-        /*
-          List of Bets
-        */
-        }
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {/* {bet_id} */}
-        </Typography>
         <Typography variant="h5" component="div">
-        {maker}
+          {prop}
+        </Typography>
+        <Typography color="text.secondary">
+          {maker} vs. {taker}
         </Typography>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          vs.
+          <br></br>
+          Side: {prop_side}<br></br>
+          Total: {prop_value}<br></br>
+          Juice: {prop_juice}<br></br>
         </Typography>
-        <Typography variant="h5" component="div">
-          {taker}
-        </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          {prop_side}
-          {/* <li>{prop_side}</li>
-          <li>{prop_value}</li>
-          <li>{prop_juice}</li> */}
+
+        <Typography color="text.secondary" align="right">
+          <i>Listed: {datePrint}</i>
         </Typography>
       </CardContent>
-
-      <CardActions>
-        <IconButton edge="end" aria-label="comments">
-          <VisibilityOffIcon />
-        </IconButton>
-        <IconButton edge="end" aria-label="comments">
-          <BookmarkAddIcon />
-        </IconButton>
-                  
-      </CardActions>
     </Card>
   );
 }

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Stack from '@mui/material/Stack';
+import Grid from '@mui/material/Grid';
 import styles from '../../styles/Home.module.css'
 import MatchupCard from './bet'
 
@@ -21,15 +21,17 @@ export default function Bets({ data }) {
       <main className={styles.main}>
         <h1 className={styles.title}>Bets</h1>
         
-        <Stack direction="row" spacing={2}>
+        <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
         {
           data.data.map((bet, betIndex) => {
             return (
-              <MatchupCard {...bet} key={betIndex}></MatchupCard>
+              <Grid item xs={2} sm={4} md={4} key={betIndex}>
+                <MatchupCard {...bet} key={betIndex}></MatchupCard>
+              </Grid>
             )
           })
         }
-        </Stack>
+        </Grid>
       </main>
 
       <footer className={styles.footer}>
