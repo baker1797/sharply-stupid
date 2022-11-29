@@ -21,7 +21,7 @@ export default function WeeklyBets({ data }) {
 				<main className={styles.main}>
 					<h1 className={styles.title}>Side Bets</h1>
 
-					<Container>
+					<Container sx={{mb: 2}}>
 						<Link href="/bets/12">12</Link> | <Link href="/bets/13">13</Link> | <Link href="/bets/14">14</Link><br></br> 
 						<Link href="/bets/15">15</Link> | <Link href="/bets/16">16</Link> | <Link href="/bets/17">17</Link>
 					</Container>
