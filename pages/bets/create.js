@@ -16,8 +16,9 @@ export default class NewBetCard extends React.Component {
         super(props)
 
         this.state = {
-            betProp: null,
-            date_created: null
+            away_team: null,
+            home_team: null,
+            line: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -35,23 +36,26 @@ export default class NewBetCard extends React.Component {
         this.setState({
             status: 'processing'
         })
+        console.log(this.state)
 
         fetch('/api/fauna/bets/create', {
             method: 'POST',
             body: JSON.stringify({
-                betProp: this.state.betProp,
+                away_team: this.state.away_team,
+                home_team: this.state.home_team,
+                line: this.state.line,
                 dateCreated: new Date()
             })
         }).then(() => {
             this.setState({
                 status: 'success',
-                betProp: null
+                line: null
             })
         }).catch((error) => {
 
             this.setState({
                 status: 'fail',
-                betProp: null
+                line: null
             })
 
             console.log('Your bet failed to submit')
@@ -64,7 +68,9 @@ export default class NewBetCard extends React.Component {
         console.log('/pages/bets/create: handleCancel')
 
         this.setState({
-            betProp: null
+            away_team: null,
+            home_team: null,
+            line: nul
         });
     }
     
@@ -106,11 +112,21 @@ export default class NewBetCard extends React.Component {
                     <Card>
                         <CardContent>
                             <TextField
-                                id="new-bet-prop"
-                                label="Bet"
-                                multiline
-                                rows={3}
-                                name="betProp"
+                                id="new-bet-away"
+                                label="Away"
+                                name="away_team"
+                                onChange={this.handleInputChange}
+                            />
+                            <TextField
+                                id="new-bet-home"
+                                label="Home"
+                                name="home_team"
+                                onChange={this.handleInputChange}
+                            />
+                            <TextField
+                                id="new-bet-line"
+                                label="Line"
+                                name="line"
                                 onChange={this.handleInputChange}
                             />
 
@@ -118,9 +134,9 @@ export default class NewBetCard extends React.Component {
                                 <Button id="new-bet-submit" variant="contained" endIcon={<SendIcon />} onClick={this.handleSubmit}>
                                     Submit
                                 </Button>
-                                <Button id="new-bet-cancel" variant="outlined" startIcon={<DeleteIcon />} onClick={this.handleCancel}>
+                                {/* <Button id="new-bet-cancel" variant="outlined" startIcon={<DeleteIcon />} onClick={this.handleCancel}>
                                     Cancel
-                                </Button>
+                                </Button> */}
                             </CardActions>
 
                             { this.renderStatus() }

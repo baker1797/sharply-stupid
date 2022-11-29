@@ -40,7 +40,7 @@ export default function Bets({ data }) {
 
 export async function getServerSideProps() {
 
-	// console.log('bets :: getStaticProps')
+	// console.log('bets :: getServerSideProps')
 
 	let domain = 'http://sharply-stupid.herokuapp.com';
 	let data;

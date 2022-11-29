@@ -1,37 +1,44 @@
 import faunadb from 'faunadb'
 import hash from 'object-hash'
 
-const parseProp = (reqBody) => {
-    return reqBody ? reqBody.betProp : null
+const parseBody = (reqBody, key) => {
+    let value
+    
+    switch (key) {
+        case 'away_team':
+            value = reqBody ? reqBody.away_team : null
+            break
+        case 'home_team':
+            value = reqBody ? reqBody.home_team : null
+            break
+        case 'line':
+            value = reqBody ? reqBody.line : null
+            break
+    }
+    
+    return value
 }
 
 export default async (req, res) => {
     try {
-        const q = faunadb.query;
+        const q = faunadb.query
 
         const client = new faunadb.Client({
-            // Replace YOUR_FAUNA_SECRET with the secret for the database that
-            // should contain your Todo documents.
             secret: process.env.FAUNA_SECRET,
             domain: 'db.us.fauna.com',
             scheme: 'https',
         });
 
-        console.log(Object.keys(req.body))
-
         const reqBody = JSON.parse(req.body)
-        console.log(reqBody)
+        // console.log(reqBody)
         
-        let bet = {
+        const bet = {
             week: 13,
-            prop: parseProp(reqBody),
+            away_team: parseBody(reqBody, 'away_team'),
+            home_team: parseBody(reqBody, 'home_team'),
+            line: parseBody(reqBody, 'line'),
             bet_id: null,
-            date_created: new Date() + "",
-            // prop_side: "under",
-            // prop_value: 1.5,
-            // prop_juice: -145,
-            // maker: "Reid",
-            // taker: "Jody"
+            date_created: new Date() + ''
         }
 
 

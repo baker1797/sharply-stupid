@@ -24,13 +24,9 @@ export default function BetCard({ data }) {
 	}
 
 	const {
-		// bet_id,
-		prop,
-		// prop_side,
-		// prop_value,
-		// prop_juice,
-		maker,
-		taker,
+		away_team,
+		home_team,
+		line,
 		date_created
 	} = data;
 
@@ -38,16 +34,14 @@ export default function BetCard({ data }) {
 		<Card sx={{ minWidth: 150, mb: 1.5 }}>
 			<CardContent sx={{ minheight: 150 }}>
 				<Typography variant="h5" component="div">
-					{prop}
+					{away_team}
 				</Typography>
 				<Typography color="text.secondary">
-					{maker} vs. {taker}
+					vs.
 				</Typography>
-				{/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          Side: {prop_side}<br></br>
-          Total: {prop_value}<br></br>
-          Juice: {prop_juice}<br></br>
-        </Typography> */}
+				<Typography variant="h5" component="div">
+					{home_team} ({line})
+				</Typography>
 
 				<Typography color="text.secondary" align="left">
 					<i>Listed: {printDate(date_created)}</i>

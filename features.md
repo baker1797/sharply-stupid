@@ -1,7 +1,10 @@
+## General
+- [x] Resource Links
+- [ ] https://nextjs.org/docs/api-reference/next.config.js/rewrites
+
 ## Side bets
 - [x] READ: View all bets
-- [ ] CREATE: Create bet
-    - in progress
+- [x] CREATE: Create bet
     - Admin “Dylan”
     - Secret url?
 - [ ] DELETE: Delete a bet
@@ -27,6 +30,3 @@
 - [ ] READ: Player values by month table
 - [ ] CREATE: Submit monthly values
 
-
-## General
-- [x] Resource Links
