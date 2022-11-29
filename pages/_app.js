@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 // import { ThemeProvider } from '@mui/material/Styles';
 import CssBaseline from '@mui/material/CssBaseline';
+import NavBottom from '../components/nav-bottom'
 // import theme from '../src/theme';
 
 export default function MyApp(props) {
@@ -27,17 +28,11 @@ export default function MyApp(props) {
       {/* <ThemeProvider theme={theme}> */}
         {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
         <CssBaseline />
-        <Component {...pageProps} />
+        <Component {...pageProps} sx={{mb: 1}} />
       {/* </ThemeProvider> */}
 
-      <div>
-        <h3>Sharply Stupid Features</h3>
-        <ul>
-          <li><Link href="/">Home</Link></li>
-          <li><Link href="/bets">View Bets</Link></li>
-          <li><Link href="/bets/create">Create Bet</Link></li>
-          <li><Link href="/api/fauna/bets/fetch-all">View Bets <i>(json)</i></Link></li>
-        </ul>
+      
+        <NavBottom></NavBottom>
 
         <h3>Resources</h3>
         <ul>
@@ -50,7 +45,7 @@ export default function MyApp(props) {
           <li><a href="https://docs.google.com/spreadsheets/d/1wSvofUJjmTkWVFqqFrn7ysENvb_YKpNhvVysagRZ0gQ/edit">Draft Picks &amp; Trades</a></li>
           <li><a href="https://docs.google.com/document/d/1ll74OiubUdQv5pGOyAFbp_jQzYGU2XWM_0tH91SrT0U/edit">JHBC Constitution</a></li>
         </ul>
-      </div>
+      
     </React.Fragment>
   );
 }

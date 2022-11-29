@@ -12,9 +12,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      {/* <main className={styles.main}> */}
         <h1 className={styles.title}><i>Sharply</i> Stupid!</h1>
-      </main>
+      {/* </main> */}
     </div>
   )
 }

@@ -1,9 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
+import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
+import TextField from '@mui/material/TextField';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
+import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -26,6 +28,14 @@ export default class NewBetCard extends React.Component {
     handleSubmit(event) {
         console.log('/pages/bets/create: handleSubmit')
 
+        if (!this.state.status === 'processing') {
+            return
+        }
+
+        this.setState({
+            status: 'processing'
+        })
+
         fetch('/api/fauna/bets/create', {
             method: 'POST',
             body: JSON.stringify({
@@ -33,12 +43,19 @@ export default class NewBetCard extends React.Component {
                 dateCreated: new Date()
             })
         }).then(() => {
-            alert('Bet Submitted')
             this.setState({
+                status: 'success',
                 betProp: null
             })
-        }).catch(() => {
-            alert('Your bet failed to submit')
+        }).catch((error) => {
+
+            this.setState({
+                status: 'fail',
+                betProp: null
+            })
+
+            console.log('Your bet failed to submit')
+			console.log(error)
         })
 
     }
@@ -60,41 +77,58 @@ export default class NewBetCard extends React.Component {
           [name]: value
         });
     }
+    
+    renderStatus() {
+        if (this.state.status === 'success') {
+            return ( <Alert severity="success">Bet added!</Alert> )
+        } else if (this.state.status === 'success') {
+            return ( <Alert severity="error">Ya done goofed!</Alert> )
+        } else if (this.state.status === 'processing') {
+            return ( <Alert severity="info">Processing, hang on!</Alert> )
+        } else {
+            return ( '' )
+        }
+    }
 
     render() {
         return (
-            <Box
-                component="form"
-                sx={{
-                    minWidth: 150, maxWidth: 500, minheight: 150,
-                    '& .MuiTextField-root': { m: 1, width: '25ch' },
-                }}
-                noValidate
-                autoComplete="off"
-            >
-                <h2>Add a new Bet</h2>
-                <Card>
-                    <CardContent>
-                        <TextField
-                            id="new-bet-prop"
-                            label="Bet"
-                            multiline
-                            rows={3}
-                            name="betProp"
-                            onChange={this.handleInputChange}
-                        />
+            <Container>
+                <Box
+                    component="form"
+                    sx={{
+                        minWidth: 150, maxWidth: 500, minheight: 150,
+                        '& .MuiTextField-root': { m: 1, width: '25ch' },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                >
+                    <h2>Add a new Bet</h2>
+                    <Card>
+                        <CardContent>
+                            <TextField
+                                id="new-bet-prop"
+                                label="Bet"
+                                multiline
+                                rows={3}
+                                name="betProp"
+                                onChange={this.handleInputChange}
+                            />
 
-                        <CardActions>
-                            <Button id="new-bet-submit" variant="contained" endIcon={<SendIcon />} onClick={this.handleSubmit}>
-                                Submit
-                            </Button>
-                            <Button id="new-bet-cancel" variant="outlined" startIcon={<DeleteIcon />} onClick={this.handleCancel}>
-                                Cancel
-                            </Button>
-                        </CardActions>
-                    </CardContent>
-                </Card>
-            </Box>
+                            <CardActions>
+                                <Button id="new-bet-submit" variant="contained" endIcon={<SendIcon />} onClick={this.handleSubmit}>
+                                    Submit
+                                </Button>
+                                <Button id="new-bet-cancel" variant="outlined" startIcon={<DeleteIcon />} onClick={this.handleCancel}>
+                                    Cancel
+                                </Button>
+                            </CardActions>
+
+                            { this.renderStatus() }
+
+                        </CardContent>
+                    </Card>
+                </Box>
+            </Container>
         )
     }
 }
