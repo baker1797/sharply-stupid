@@ -39,7 +39,7 @@ export default class NewBetCard extends React.Component {
         fetch('/api/fauna/bets/create', {
             method: 'POST',
             body: JSON.stringify({
-                betProp: 'Jody vs Sal',
+                betProp: this.state.betProp,
                 dateCreated: new Date()
             })
         }).then(() => {
