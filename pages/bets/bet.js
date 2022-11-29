@@ -27,6 +27,7 @@ export default function BetCard({ data }) {
 		away_team,
 		home_team,
 		line,
+		week,
 		date_created
 	} = data;
 
@@ -43,6 +44,9 @@ export default function BetCard({ data }) {
 					{home_team} ({line})
 				</Typography>
 
+				<Typography color="text.secondary" align="left">
+					<i>Week: {week}</i>
+				</Typography>
 				<Typography color="text.secondary" align="left">
 					<i>Listed: {printDate(date_created)}</i>
 				</Typography>
