@@ -8,7 +8,7 @@ import CardContent from '@mui/material/CardContent';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-import DeleteIcon from '@mui/icons-material/Delete';
+// import DeleteIcon from '@mui/icons-material/Delete';
 
 export default class NewBetCard extends React.Component {
 
@@ -18,7 +18,8 @@ export default class NewBetCard extends React.Component {
         this.state = {
             away_team: null,
             home_team: null,
-            line: null
+            line: null,
+            week: null
         }
 
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -44,6 +45,7 @@ export default class NewBetCard extends React.Component {
                 away_team: this.state.away_team,
                 home_team: this.state.home_team,
                 line: this.state.line,
+                week: parseInt(this.state.week),
                 dateCreated: new Date()
             })
         }).then(() => {
@@ -70,7 +72,8 @@ export default class NewBetCard extends React.Component {
         this.setState({
             away_team: null,
             home_team: null,
-            line: nul
+            line: null,
+            week: null
         });
     }
     
@@ -127,6 +130,12 @@ export default class NewBetCard extends React.Component {
                                 id="new-bet-line"
                                 label="Line"
                                 name="line"
+                                onChange={this.handleInputChange}
+                            />
+                            <TextField
+                                id="new-bet-week"
+                                label="Week"
+                                name="week"
                                 onChange={this.handleInputChange}
                             />
 

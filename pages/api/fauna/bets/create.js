@@ -5,14 +5,17 @@ const parseBody = (reqBody, key) => {
     let value
     
     switch (key) {
-        case 'away_team':
-            value = reqBody ? reqBody.away_team : null
-            break
-        case 'home_team':
-            value = reqBody ? reqBody.home_team : null
-            break
-        case 'line':
-            value = reqBody ? reqBody.line : null
+        // case 'away_team':
+        //     value = reqBody ? reqBody.away_team : null
+        //     break
+        // case 'home_team':
+        //     value = reqBody ? reqBody.home_team : null
+        //     break
+        // case 'line':
+        //     value = reqBody ? reqBody.line : null
+        //     break
+        default:
+            value = reqBody ? reqBody[key] : null
             break
     }
     
@@ -33,7 +36,7 @@ export default async (req, res) => {
         // console.log(reqBody)
         
         const bet = {
-            week: 13,
+            week: parseInt(parseBody(reqBody, 'week')),
             away_team: parseBody(reqBody, 'away_team'),
             home_team: parseBody(reqBody, 'home_team'),
             line: parseBody(reqBody, 'line'),

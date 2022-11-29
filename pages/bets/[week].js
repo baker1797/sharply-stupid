@@ -5,12 +5,10 @@ import styles from '../../styles/Home.module.css'
 import MatchupCard from './bet'
 import Container from '@mui/material/Container';
 
-export default function Bets({ data }) {
+export default function WeeklyBets({ data }) {
 
-	// console.log('Bets :: render')
+	console.log('Weekly Bets :: render')
 	// console.log(data)
-
-	// TODO: merge this index file with [week] or extract the main render components
 
 	return (
 		<div className={styles.container}>
@@ -18,6 +16,7 @@ export default function Bets({ data }) {
 				<title>Side Bets | Sharply Stupid</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
+
 			<Container>
 				<main className={styles.main}>
 					<h1 className={styles.title}>Side Bets</h1>
@@ -26,7 +25,7 @@ export default function Bets({ data }) {
 						<Link href="/bets/12">12</Link> | <Link href="/bets/13">13</Link> | <Link href="/bets/14">14</Link><br></br> 
 						<Link href="/bets/15">15</Link> | <Link href="/bets/16">16</Link> | <Link href="/bets/17">17</Link>
 					</Container>
-
+					
 					<Grid container spacing={{ xs: 1, sm: 2, md: 3 }} columns={{ xs: 2, sm: 8, md: 12 }}>
 						{
 							data.data.map((bet, betIndex) => {
@@ -44,9 +43,9 @@ export default function Bets({ data }) {
 	)
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({query}) {
 
-	// console.log('bets :: getServerSideProps')
+	console.log('bets :: getServerSideProps')
 
 	let domain = 'http://sharply-stupid.herokuapp.com';
 	let data;
@@ -58,15 +57,18 @@ export async function getServerSideProps() {
 		// console.log('not dev mode :(')
 	}
 
-	const endpointUrl = `${domain}/api/fauna/bets/fetch-all`
+	const endpointUrl = `${domain}/api/fauna/bets/fetch-week`
 
 	try {
-		const res = await fetch(endpointUrl)
-		data = await res.json()
+		const res = await fetch(endpointUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+				week: parseInt(query.week)
+			})
+		})
 
-		// console.log(data)
+		data = await res.json()
 	} catch (fetchError) {
-		// console.log(fetchError)
 		data = {
 			data: []
 		}
