@@ -15,7 +15,7 @@ import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 export default function MatchupCard(props) {
   const { home, away, notes } = props;
   
-  if (!props || Object.keys(props).length == 0) {
+  if (!props || !away || !home || Object.keys(props).length == 0) {
     return 'busted'
   }
 
