@@ -1,5 +1,9 @@
 import faunadb from 'faunadb'
-import showAll from './fetch-all'
+import hash from 'object-hash'
+
+const parseProp = (reqBody) => {
+    return reqBody ? reqBody.betProp : null
+}
 
 export default async (req, res) => {
     try {
@@ -8,21 +12,30 @@ export default async (req, res) => {
         const client = new faunadb.Client({
             // Replace YOUR_FAUNA_SECRET with the secret for the database that
             // should contain your Todo documents.
-            secret: 'fnAE2C-E9mAAS99SEA3YrfqU0pMby4kcNkVjHhr4',
-            // Classic DB Domain = 'db.fauna.us';  US Region Domain = 'db.us.fauna.com'; 
-            // See https://docs.fauna.com/fauna/current/learn/understanding/region_groups for Region domain information.
+            secret: process.env.FAUNA_SECRET,
             domain: 'db.us.fauna.com',
             scheme: 'https',
         });
 
-        // const value = document.getElementById('todo').value
-        let bet_id = new Date() + ""; // TODO: absolute hack of an ID
-        let prop = "Cousins total TDs";
-        let prop_side = "under";
-        let prop_value = 1.5;
-        let prop_juice = -145;
-        let maker = "Reid";
-        let taker = "Jody";
+        console.log(Object.keys(req.body))
+
+        const reqBody = JSON.parse(req.body)
+        console.log(reqBody)
+        
+        let bet = {
+            week: 13,
+            prop: parseProp(reqBody),
+            bet_id: null,
+            date_created: new Date() + "",
+            // prop_side: "under",
+            // prop_value: 1.5,
+            // prop_juice: -145,
+            // maker: "Reid",
+            // taker: "Jody"
+        }
+
+
+        bet.bet_id = hash(bet)
         
         await client.query(
             q.If(
@@ -33,14 +46,12 @@ export default async (req, res) => {
         )
         .then((qResponse) => {
             console.log('Bets Collection')
-            res.status(200).json({data: qResponse })
         })
         .catch((err) => {
             console.log(err)
-            res.status(500).json({err })
         });
 
-        // Store the todo in Fauna
+        // Store the bet in Fauna
         await client.query(
             // q.If(
             //     q.Exists(q.Collection('bets')),
@@ -49,15 +60,7 @@ export default async (req, res) => {
             // )
           q.Create(
             q.Collection('bets'),
-            { data: {
-                bet_id,
-                prop,
-                prop_side,
-                prop_value,
-                prop_juice,
-                maker,
-                taker
-            } }
+            { data: bet }
           )
         )
         .then((qResponse) => {

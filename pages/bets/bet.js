@@ -4,8 +4,19 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+const printDate = (date) => {
+  let printDate = ''
+
+  if (date) {
+      const creation_date = new Date(date)
+      printDate = creation_date.toLocaleString('default', { month: 'long' }) + ' ' + creation_date.getDate()
+  }
+  
+  return printDate
+}
 
 export default function BetCard({data}) {
   if (!data) {
@@ -13,45 +24,43 @@ export default function BetCard({data}) {
   }
 
   const {
-    bet_id,
+    // bet_id,
     prop,
-    prop_side,
-    prop_value,
-    prop_juice,
+    // prop_side,
+    // prop_value,
+    // prop_juice,
     maker,
-    taker
+    taker,
+    date
   } = data;
 
-  var date = new Date(bet_id)
-  var datePrint = date.toLocaleString('default', { month: 'long' }) + ' ' + date.getDate()
-  
-  console.log(data)
-
   return (
-    <Card sx={{ minWidth: 150 }}>
+    <Card sx={{ minWidth: 150, mb: 1.5 }}>
       <CardContent sx={{ minheight: 150 }}>
-        <CardActions sx={{flexFlow: "row-reverse"}}>
-          <IconButton edge="end" aria-label="comments">
-            <BookmarkAddIcon />
-          </IconButton>
-        </CardActions>
-
         <Typography variant="h5" component="div">
           {prop}
         </Typography>
         <Typography color="text.secondary">
           {maker} vs. {taker}
         </Typography>
-        <Typography sx={{ mb: 1.5 }} color="text.secondary">
-          <br></br>
+        {/* <Typography sx={{ mb: 1.5 }} color="text.secondary">
           Side: {prop_side}<br></br>
           Total: {prop_value}<br></br>
           Juice: {prop_juice}<br></br>
-        </Typography>
+        </Typography> */}
 
-        <Typography color="text.secondary" align="right">
-          <i>Listed: {datePrint}</i>
+        <Typography color="text.secondary" align="left">
+          <i>Listed: {printDate(date)}</i>
         </Typography>
+        
+        <CardActions sx={{flexFlow: "row-reverse"}}>
+          <IconButton aria-label="delete">
+            <DeleteIcon />
+          </IconButton>
+          <IconButton sx={{mr: 1}} edge="end" aria-label="save">
+            <BookmarkAddIcon />
+          </IconButton>
+        </CardActions>
       </CardContent>
     </Card>
   );

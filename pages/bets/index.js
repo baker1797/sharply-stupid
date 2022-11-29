@@ -37,16 +37,16 @@ export default function Bets({ data }) {
 
 export async function getStaticProps() {
   
-  console.log('bets :: getStaticProps')
+  // console.log('bets :: getStaticProps')
 
   let domain = 'http://sharply-stupid.herokuapp.com';
   let data;
 
   if (process.env.NODE_ENV == 'development') {
     domain = 'http://localhost:3000';
-    console.log('DEV MODE!')
+    // console.log('DEV MODE!')
   } else {
-    console.log('not dev mode :(')
+    // console.log('not dev mode :(')
   }
 
   const endpointUrl = `${domain}/api/fauna/bets/fetch-all`

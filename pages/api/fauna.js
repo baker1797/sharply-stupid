@@ -6,11 +6,7 @@ export default async (req, res) => {
         const q = faunadb.query;
 
         const client = new faunadb.Client({
-            // Replace YOUR_FAUNA_SECRET with the secret for the database that
-            // should contain your Todo documents.
-            secret: 'fnAE2C-E9mAAS99SEA3YrfqU0pMby4kcNkVjHhr4',
-            // Classic DB Domain = 'db.fauna.us';  US Region Domain = 'db.us.fauna.com'; 
-            // See https://docs.fauna.com/fauna/current/learn/understanding/region_groups for Region domain information.
+            secret: process.env.FAUNA_SECRET,
             domain: 'db.us.fauna.com',
             scheme: 'https',
         });
