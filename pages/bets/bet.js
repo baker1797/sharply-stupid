@@ -31,7 +31,7 @@ export default function BetCard({ data }) {
 		// prop_juice,
 		maker,
 		taker,
-		date
+		date_created
 	} = data;
 
 	return (
@@ -50,7 +50,7 @@ export default function BetCard({ data }) {
         </Typography> */}
 
 				<Typography color="text.secondary" align="left">
-					<i>Listed: {printDate(date)}</i>
+					<i>Listed: {printDate(date_created)}</i>
 				</Typography>
 
 				<CardActions sx={{ flexFlow: "row-reverse" }}>
