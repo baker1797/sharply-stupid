@@ -24,7 +24,19 @@ const parseBody = (reqBody, key) => {
 
 export default async (req, res) => {
     try {
-        const q = faunadb.query
+        const q = faunadb.query; // todo - remove this in favor of functions
+        const {
+            // Paginate, // many
+            // Get, // one
+            // Select,
+            // Match,
+            // Index,
+            Create,
+            Collection,
+            // Lambda,
+            // Var,
+            // Join
+        } = faunadb.query
 
         const client = new faunadb.Client({
             secret: process.env.FAUNA_SECRET,
@@ -68,8 +80,8 @@ export default async (req, res) => {
             //     null,
             //     q.CreateCollection({ name: 'bets' })
             // )
-          q.Create(
-            q.Collection('bets'),
+          Create(
+            Collection('bets'),
             { data: bet }
           )
         )

@@ -1,12 +1,12 @@
 ## General
 - [x] Resource Links
-- [ ] https://nextjs.org/docs/api-reference/next.config.js/rewrites
+- [ ] Make Next.js render as SPA
+    - currently re-renders
+    - rewrites? https://nextjs.org/docs/api-reference/next.config.js/rewrites
 
 ## Side bets
 - [x] READ: View all bets
 - [x] CREATE: Create bet
-    - Admin “Dylan”
-    - Secret url?
 - [ ] DELETE: Delete a bet
 - [ ] UPDATE: Take a side
     - type your name and the side
@@ -14,6 +14,8 @@
     - use a secret url at first
 - [ ] READ: View all bets by maker/taker
 - [ ] READ: View all bets by week
+- [ ] Login
+    - modal to select your name. persist through a forever cookie
 
 ## Gambling
 - [ ] CREATE: Add a note about a game
@@ -29,4 +31,3 @@
 - [ ] UPDATE: Submit alt names (do in the GUI)
 - [ ] READ: Player values by month table
 - [ ] CREATE: Submit monthly values
-
