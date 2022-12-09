@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import Link from 'next/link';
 // import { ThemeProvider } from '@mui/material/Styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import NavBottom from '../components/nav-bottom'
-import Container from '@mui/material/Container';
 // import theme from '../src/theme';
 
 export default function MyApp(props) {
@@ -31,9 +28,6 @@ export default function MyApp(props) {
         <CssBaseline />
         <Component {...pageProps} sx={{mb: 1}} />
       {/* </ThemeProvider> */}
-
-      
-        <NavBottom></NavBottom>
       
     </React.Fragment>
   );

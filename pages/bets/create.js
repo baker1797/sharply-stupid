@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from '/styles/Home.module.css'
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
@@ -8,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
-// import DeleteIcon from '@mui/icons-material/Delete';
+import NavBottom from './components/nav-bottom';
 
 export default class NewBetCard extends React.Component {
 
@@ -116,7 +117,7 @@ export default class NewBetCard extends React.Component {
                     autoComplete="off"
                 >
                     <h2>Add a new Bet</h2>
-                    <Card>
+                    <Card className={styles.card} sx={{width: "100%"}}>
                         <CardContent>
                             <TextField
                                 id="new-bet-away"
@@ -157,6 +158,9 @@ export default class NewBetCard extends React.Component {
                         </CardContent>
                     </Card>
                 </Box>
+
+		    	<NavBottom></NavBottom>
+		
             </Container>
         )
     }

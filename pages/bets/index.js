@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import styles from '../../styles/Home.module.css'
-import MatchupCard from './bet'
+import styles from '/styles/Home.module.css'
+import MatchupCard from './components/bet'
 import Container from '@mui/material/Container';
+import NavBottom from './components/nav-bottom';
 
 export default function Bets({ data }) {
 
@@ -18,13 +19,13 @@ export default function Bets({ data }) {
 				<title>Side Bets | Sharply Stupid</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<Container>
+
+			<Container sx={{mb:4}}>
 				<main className={styles.main}>
 					<h1 className={styles.title}>Side Bets</h1>
 
 					<Container>
-						<Link href="/bets/12">12</Link> | <Link href="/bets/13">13</Link> | <Link href="/bets/14">14</Link><br></br> 
-						<Link href="/bets/15">15</Link> | <Link href="/bets/16">16</Link> | <Link href="/bets/17">17</Link>
+						<Link href="/bets/12">12</Link> | <Link href="/bets/13">13</Link> | <Link href="/bets/14">14</Link> | <Link href="/bets/15">15</Link> | <Link href="/bets/16">16</Link> | <Link href="/bets/17">17</Link>
 					</Container>
 
 					<Grid container spacing={{ xs: 1, sm: 2, md: 3 }} columns={{ xs: 2, sm: 8, md: 12 }}>
@@ -40,6 +41,8 @@ export default function Bets({ data }) {
 					</Grid>
 				</main>
 			</Container>
+
+			<NavBottom></NavBottom>
 		</div>
 	)
 }

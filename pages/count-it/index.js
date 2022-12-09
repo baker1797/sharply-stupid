@@ -1,85 +1,57 @@
 import * as React from 'react';
 import Head from 'next/head'
-import styles from '../../styles/Home.module.css'
+import styles from '/styles/Home.module.css'
 import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
+import GavelIcon from '@mui/icons-material/Gavel';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import NavBottom from './components/nav-bottom';
 
 export default class CountItLeaderboard extends React.Component {
 
     constructor(props) {
         super(props)
 
-        this.state = {
-            leader: "Kyle Baker",
-            week: 10,
-            leaders: [{
-                name: "Kyle Baker",
-                points: 100
-            },{
-                name: "Jason Kwok",
-                points: 94
-            },{
-                name: "JC",
-                points: 49
-            }]
-        }
+        this.state = {}
     }
-
-    // GET all leaders
-    // GET all action by Leader
-    // JOIN all leaders & SUM(actions.each(return action.points))
-    // return Name & Points
-    // render Leaders.sort(points).map()
 
     render() {
 
         return (
             <div className={styles.container}>
                 <Head>
-                    <title>CountIt Leaderboard</title>
+                    <title>Count It!</title>
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Container>
                     <main className={styles.main}>
-                        <h1 className={styles.title}>Count It Leaderboard | Week {this.state.week}</h1>
-                        <ul>
-                            {this.state.leaders.map((leader) => (
-                                <li key={leader.name}>{leader.name} ({leader.points})</li>
-                            ))}
-                        </ul>
+                        <h1 className={styles.title}>Count It!</h1>
+                        <Stack spacing={2}>
+                            <Button variant="contained" endIcon={<AddBoxIcon />}>
+                                <Link href="/count-it/action/watch" sx={{color: "white", textDecoration:"none"}}>
+                                    Increase your Fandom
+                                </Link>
+                            </Button>
+
+                            <Button variant="contained" endIcon={<FormatListBulletedIcon />}>
+                                <Link href="/count-it/leaderboard" sx={{color: "white", textDecoration:"none"}}>
+                                    View Leaderboard
+                                </Link>
+                            </Button>
+                            
+                            <Button variant="contained" endIcon={<GavelIcon />}>
+                                <Link href="/count-it/rules" sx={{color: "white", textDecoration:"none"}}>
+                                    Rules
+                                </Link>
+                            </Button>
+                        </Stack>
                     </main>
                 </Container>
+                <NavBottom></NavBottom>
             </div>
         )
     }
 }
-
-// export async function getServerSideProps() {
-
-// 	// console.log('bets :: getServerSideProps')
-
-// 	let domain = 'http://sharply-stupid.herokuapp.com';
-// 	let data;
-
-// 	if (process.env.NODE_ENV == 'development') {
-// 		domain = 'http://localhost:3000';
-// 		// console.log('DEV MODE!')
-// 	} else {
-// 		// console.log('not dev mode :(')
-// 	}
-
-// 	const endpointUrl = `${domain}/api/fauna/bets/fetch-all`
-
-// 	try {
-// 		const res = await fetch(endpointUrl)
-// 		data = await res.json()
-
-// 		// console.log(data)
-// 	} catch (fetchError) {
-// 		// console.log(fetchError)
-// 		data = {
-// 			data: []
-// 		}
-// 	}
-
-// 	return { props: { data } }
-// }

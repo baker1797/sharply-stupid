@@ -1,19 +1,46 @@
+import * as React from 'react';
 import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import styles from '/styles/Home.module.css'
+import Container from '@mui/material/Container';
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Link from 'next/link'
+import AddBoxIcon from '@mui/icons-material/AddBox';
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Sharply Stupid</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+export default class Home extends React.Component {
+	constructor(props) {
+        super(props)
 
-      {/* <main className={styles.main}> */}
-        <h1 className={styles.title}><i>Sharply</i> Stupid!</h1>
-      {/* </main> */}
-    </div>
-  )
+        this.state = {}
+    }
+	
+	render() {
+		return (
+			<div className={styles.container}>
+				<Head>
+					<title>Sharply Stupid</title>
+					<link rel="icon" href="/favicon.ico" />
+				</Head>
+				<Container>
+					<main className={styles.main}>
+						<h1><i>Sharply</i> Stupid!</h1>
+
+						<Stack spacing={2}>
+							<Button variant="contained">
+								<Link href="/count-it" sx={{ color: "white", textDecoration: "none" }}>
+									Count It!
+								</Link>
+							</Button>
+
+							<Button variant="contained">
+								<Link href="/bets" sx={{ color: "white", textDecoration: "none" }}>
+									Side Bets
+								</Link>
+							</Button>
+						</Stack>
+					</main>
+				</Container>
+			</div>
+		)
+	}
 }

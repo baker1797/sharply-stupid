@@ -1,4 +1,5 @@
 import * as React from 'react';
+import styles from '/styles/Home.module.css'
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -32,7 +33,7 @@ export default function BetCard({ data }) {
 	} = data;
 
 	return (
-		<Card sx={{ minWidth: 150, mb: 1.5 }}>
+		<Card className={styles.card}>
 			<CardContent sx={{ minheight: 150 }}>
 				<Typography variant="h5" component="div">
 					{away_team}

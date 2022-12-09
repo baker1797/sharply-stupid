@@ -12,6 +12,7 @@ import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
+import NavBottom from './../components/nav-bottom';
 
 function WatchInput() {
     return (
@@ -226,7 +227,7 @@ export default class CountItAction extends React.Component {
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Container sx={{maxWidth: 400}}>
-                    <main className={styles.main}>
+                    <main>
                         <h1>Count It</h1>
                         <h3>Track my Action</h3>
                         <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
@@ -243,7 +244,7 @@ export default class CountItAction extends React.Component {
                                     })
                                 }
                             </Select>
-                            <Card>
+                            <Card className={styles.card}>
                                 <CardContent>
                                     {this.renderActionDetails(this.state.actionType)}
 
@@ -260,6 +261,8 @@ export default class CountItAction extends React.Component {
                         </FormControl>
                     </main>
                 </Container>
+
+                <NavBottom></NavBottom>
             </div>
         )
     }

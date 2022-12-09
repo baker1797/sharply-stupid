@@ -1,9 +1,10 @@
 import Head from 'next/head'
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
-import styles from '../../styles/Home.module.css'
-import MatchupCard from './bet'
+import styles from '/styles/Home.module.css'
+import MatchupCard from './components/bet'
 import Container from '@mui/material/Container';
+import NavBottom from './components/nav-bottom';
 
 export default function WeeklyBets({ data }) {
 
@@ -21,7 +22,7 @@ export default function WeeklyBets({ data }) {
 				<main className={styles.main}>
 					<h1 className={styles.title}>Side Bets</h1>
 
-					<Container sx={{mb: 2}}>
+					<Container sx={{mb: 4}}>
 						<Link href="/bets/12">12</Link> | <Link href="/bets/13">13</Link> | <Link href="/bets/14">14</Link><br></br> 
 						<Link href="/bets/15">15</Link> | <Link href="/bets/16">16</Link> | <Link href="/bets/17">17</Link>
 					</Container>
@@ -39,6 +40,7 @@ export default function WeeklyBets({ data }) {
 					</Grid>
 				</main>
 			</Container>
+			<NavBottom></NavBottom>
 		</div>
 	)
 }
