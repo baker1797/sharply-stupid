@@ -87,6 +87,10 @@ export default class NewBetCard extends React.Component {
         });
     }
     
+    /**
+     * TODO - move this to components
+     * @returns 
+     */
     renderStatus() {
         if (this.state.status === 'success') {
             return ( <Alert severity="success">Bet added!</Alert> )
