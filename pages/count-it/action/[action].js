@@ -2,7 +2,6 @@ import * as React from 'react';
 import Head from 'next/head'
 import styles from '/styles/Home.module.css'
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -11,75 +10,9 @@ import Alert from '@mui/material/Alert';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
 import NavBottom from './../components/nav-bottom';
+import WatchInput from './../components/WatchInput';
 
-function WatchInput() {
-    return (
-        <Grid container sx={{flexGrow: 1}} spacing={4} alignItems="center" justifyContent="flex-start">
-            <Grid item xs={12}>
-                <TextField
-                    key="fan-name"
-                    id="fan-name"
-                    label="Fan's Name"
-                    name="fan_name"
-                    style={{width: "100%"}}
-                />
-            </Grid>
-
-            { /* Away */ }
-            <Grid item xs={3}>
-                <Select
-                    labelId="Action"
-                    id="action-entry"
-                    name="away_name"
-                    value="ATL"
-                    label="Select Action"
-                >
-                    {
-                        ['ATL', 'PHI', 'NO', 'GSW'].map((option) => {
-                            return <MenuItem key={option} value={option}>{option}</MenuItem>
-                        })
-                    }
-                </Select>
-            </Grid>
-            <Grid item xs={9}>
-                <TextField
-                    key="away-score"
-                    id="away-score"
-                    label="Away Score"
-                    name="away_score"
-                />
-            </Grid>
-
-
-            { /* Home */ }
-            <Grid item xs={3}>
-                <Select
-                    labelId="Action"
-                    id="action-entry"
-                    name="home_name"
-                    value="GSW"
-                    label="Select Action"
-                >
-                    {
-                        ['ATL', 'PHI', 'NO', 'GSW'].map((option) => {
-                            return <MenuItem key={option} value={option}>{option}</MenuItem>
-                        })
-                    }
-                </Select>
-            </Grid>
-            <Grid item xs={9}>
-                <TextField
-                    key="home-score"
-                    id="home-score"
-                    label="Home Score"
-                    name="home_score"
-                />
-            </Grid>
-        </Grid>
-    )
-}
 
 /**
  * 

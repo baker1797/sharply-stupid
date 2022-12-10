@@ -23,16 +23,15 @@ export default class CountItLeaderboard extends React.Component {
     // render Leaders.sort(points).map()
 
     render() {
-
         return (
             <div className={styles.container}>
                 <Head>
-                    <title>CountIt Leaderboard</title>
+                    <title>Count It! Leaderboard</title>
                     <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Container>
-                    <main className={styles.main}>
-                        <h1>Count It Leaderboard</h1>
+                    <main>
+                        <h1>Count It!</h1>
                         <h3>Week {this.state.week}</h3>
                         <ol>
                             {this.state.leaders.map((leader) => (
