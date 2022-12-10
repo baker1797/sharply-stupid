@@ -40,7 +40,7 @@ export default class NewBetCard extends React.Component {
         })
         console.log(this.state)
 
-        fetch('/api/fauna/bets/create', {
+        fetch('/api/bets/create', {
             method: 'POST',
             body: JSON.stringify({
                 away_team: this.state.away_team,
@@ -95,7 +95,7 @@ export default class NewBetCard extends React.Component {
     renderStatus() {
         if (this.state.status === 'success') {
             return ( <Alert severity="success">Bet added!</Alert> )
-        } else if (this.state.status === 'success') {
+        } else if (this.state.status === 'error') {
             return ( <Alert severity="error">Ya done goofed!</Alert> )
         } else if (this.state.status === 'processing') {
             return ( <Alert severity="info">Processing, hang on!</Alert> )

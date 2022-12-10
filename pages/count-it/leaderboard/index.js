@@ -53,31 +53,35 @@ export async function getServerSideProps() {
     // JOIN all leaders & SUM(actions.each(return action.points))
     // return Name & Points
     // render Leaders.sort(points).map()
+    
+    let domain = 'http://sharply-stupid.herokuapp.com';
+	let data;
+    
+	if (process.env.NODE_ENV == 'development') {
+		domain = 'http://localhost:3000';
+		// console.log('DEV MODE!')
+	} else {
+		// console.log('not dev mode :(')
+	}
 
+	const endpointUrl = `${domain}/api/count-it/actions`
 
-	// let domain = 'http://sharply-stupid.herokuapp.com';
-	// let data;
+	try {
+		const res = await fetch(endpointUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+				fan_name: "Jason Kwok"
+			})
+		})
 
-	// if (process.env.NODE_ENV == 'development') {
-	// 	domain = 'http://localhost:3000';
-	// 	// console.log('DEV MODE!')
-	// } else {
-	// 	// console.log('not dev mode :(')
-	// }
+        // TODO - this is returning an array not an object
+		data = await res.json()
 
-	// const endpointUrl = `${domain}/api/fauna/bets/fetch-all`
-
-	// try {
-	// 	const res = await fetch(endpointUrl)
-	// 	data = await res.json()
-
-	// 	// console.log(data)
-	// } catch (fetchError) {
-	// 	// console.log(fetchError)
-	// 	data = {
-	// 		data: []
-	// 	}
-	// }
+	} catch (fetchError) {
+		data = {
+			data: []
+		}
+	}
 
 	return { props: {
         leaders: [{

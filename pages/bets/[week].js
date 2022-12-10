@@ -59,7 +59,7 @@ export async function getServerSideProps({query}) {
 		// console.log('not dev mode :(')
 	}
 
-	const endpointUrl = `${domain}/api/fauna/bets/fetch-week`
+	const endpointUrl = `${domain}/api/bets/fetch-week`
 
 	try {
 		const res = await fetch(endpointUrl, {

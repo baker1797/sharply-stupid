@@ -13,6 +13,7 @@ export default function WatchInput() {
                 <TextField
                     key="fan-name"
                     id="fan-name"
+                    className="action_input"
                     label="Fan's Name"
                     name="fan_name"
                     style={{width: "100%"}}
@@ -23,7 +24,8 @@ export default function WatchInput() {
             <Grid item xs={3}>
                 <Select
                     labelId="Action"
-                    id="action-entry"
+                    id="away-name"
+                    className="action_input"
                     name="away_name"
                     value="ATL"
                     label="Select Action"
@@ -39,6 +41,7 @@ export default function WatchInput() {
                 <TextField
                     key="away-score"
                     id="away-score"
+                    className="action_input"
                     label="Away Score"
                     name="away_score"
                 />
@@ -49,7 +52,8 @@ export default function WatchInput() {
             <Grid item xs={3}>
                 <Select
                     labelId="Action"
-                    id="action-entry"
+                    id="home-name"
+                    className="action_input"
                     name="home_name"
                     value="GSW"
                     label="Select Action"
@@ -65,6 +69,7 @@ export default function WatchInput() {
                 <TextField
                     key="home-score"
                     id="home-score"
+                    className="action_input"
                     label="Home Score"
                     name="home_score"
                 />
