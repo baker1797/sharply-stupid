@@ -8,11 +8,13 @@ export default class CountItLeaderboard extends React.Component {
 
     constructor(props) {
         super(props)
-
+        console.log('props')
+        console.log(props)
         this.state = {
             leader: "Kyle Baker",
             week: 10,
-            leaders: props.leaders
+            // leaders: props.leaders
+            actions: props.actions
         }
     }
 
@@ -34,8 +36,8 @@ export default class CountItLeaderboard extends React.Component {
                         <h1>Count It!</h1>
                         <h3>Week {this.state.week}</h3>
                         <ol>
-                            {this.state.leaders.map((leader) => (
-                                <li key={leader.name}>{leader.name} ({leader.points})</li>
+                            {this.state.actions.data.map((action) => (
+                                <li key={action.ts}>{action.data.fan['@ref'].id} ({action.data.away_name},{action.data.home_name},{action.data.away_score},{action.data.home_score})</li>
                             ))}
                         </ol>
                     </main>
@@ -64,7 +66,7 @@ export async function getServerSideProps() {
 		// console.log('not dev mode :(')
 	}
 
-	const endpointUrl = `${domain}/api/count-it/actions`
+	const endpointUrl = `${domain}/api/count-it/all-actions`
 
 	try {
 		const res = await fetch(endpointUrl, {
@@ -76,6 +78,7 @@ export async function getServerSideProps() {
 
         // TODO - this is returning an array not an object
 		data = await res.json()
+        console.log(data)
 
 	} catch (fetchError) {
 		data = {
@@ -83,16 +86,7 @@ export async function getServerSideProps() {
 		}
 	}
 
-	return { props: {
-        leaders: [{
-            name: "Kyle Baker",
-            points: 100
-        },{
-            name: "Jason Kwok",
-            points: 94
-        },{
-            name: "JC",
-            points: 49
-        }]
-    } }
+	return {
+        props: data
+    }
 }

@@ -1,5 +1,5 @@
 import faunadb, { Paginate } from 'faunadb'
-import { parseInputFromRequestBody } from  './../../../lib/helpers'
+import { parseInputFromRequestBody } from  '../../../lib/helpers'
 
 export default async (req, res) => {
     try {
@@ -8,7 +8,8 @@ export default async (req, res) => {
             Select,
             Get,
             Match,
-            Index
+            Index,
+            Map
         } = faunadb.query
 
         const client = new faunadb.Client({
@@ -17,17 +18,13 @@ export default async (req, res) => {
             scheme: 'https',
         });
 
-        const reqBody = JSON.parse(req.body)
-        let fanName = parseInputFromRequestBody(reqBody, 'fan_name');
+        // const reqBody = JSON.parse(req.body)
 
         try {
             const actions = await client.query(
-                // TODO does this need a map lambda method?
-                Paginate(
-                    Match(
-                        Index("actions_per_fan"),
-                        Select('ref', Get(Match(Index('fans_by_name'), fanName)))
-                    )
+                Map(
+                    q.Paginate(q.Documents(q.Collection('actions')), { size: 100 }),
+                    q.Lambda('ref', q.Get(q.Var('ref')))
                 )
             )
             
