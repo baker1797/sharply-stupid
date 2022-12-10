@@ -1,5 +1,5 @@
 import faunadb, { Paginate } from 'faunadb'
-import { parseInputFromRequestBody } from  './../../helpers'
+import { parseInputFromRequestBody } from  './../../../lib/helpers'
 
 export default async (req, res) => {
     try {
