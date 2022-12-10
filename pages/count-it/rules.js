@@ -77,7 +77,7 @@ export default class CountItRules extends React.Component {
 							<Grid item xs={5} sx={{fontSize: "smaller"}}>Text me a picture of you and the scoreboard at a game</Grid>
 							<Grid item xs={2} sx={{textAlign: "center"}}>10</Grid>
 							<Grid item xs={2} sx={{textAlign: "center"}}>1/game</Grid>
-							<Grid item xs={12} sx={{pt: 1, pb: 2, mb:2, fontSize: "smaller", borderBottom: "1px #3c3c3c solid"}}>Can be combined with pre-tipoff and post-buzzer; can't be combined with watching on TV</Grid>
+							<Grid item xs={12} sx={{pt: 1, pb: 2, mb:2, fontSize: "smaller", borderBottom: "1px #3c3c3c solid"}}>Can be combined with pre-tipoff and post-buzzer; can&apos;t be combined with watching on TV</Grid>
 
 							<Grid item xs={3} sx={{textAlign:"center"}}>
 								<IconButton aria-label="attend">
