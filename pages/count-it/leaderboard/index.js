@@ -3,6 +3,7 @@ import Head from 'next/head'
 import styles from '/styles/Home.module.css'
 import Container from '@mui/material/Container';
 import NavBottom from './../components/nav-bottom';
+import { createApiRoute } from './../../../lib/helpers'
 
 export default class CountItLeaderboard extends React.Component {
 
@@ -58,17 +59,8 @@ export async function getServerSideProps() {
     // return Name & Points
     // render Leaders.sort(points).map()
     
-    let domain = 'http://sharply-stupid.herokuapp.com';
-	let data;
-    
-	if (process.env.NODE_ENV == 'development') {
-		domain = 'http://localhost:3000';
-		// console.log('DEV MODE!')
-	} else {
-		// console.log('not dev mode :(')
-	}
-
-	const endpointUrl = `${domain}/api/count-it/all-actions`
+    let data;
+	const endpointUrl = createApiRoute('count-it/all-actions')
 
 	try {
 		const res = await fetch(endpointUrl, {

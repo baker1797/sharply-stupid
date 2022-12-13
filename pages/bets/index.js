@@ -5,6 +5,7 @@ import styles from '/styles/Home.module.css'
 import MatchupCard from './components/bet'
 import Container from '@mui/material/Container';
 import NavBottom from './components/nav-bottom';
+import { createApiRoute } from './../../lib/helpers'
 
 export default function Bets({ data }) {
 
@@ -49,19 +50,8 @@ export default function Bets({ data }) {
 
 export async function getServerSideProps() {
 
-	// console.log('bets :: getServerSideProps')
-
-	let domain = 'http://sharply-stupid.herokuapp.com';
 	let data;
-
-	if (process.env.NODE_ENV == 'development') {
-		domain = 'http://localhost:3000';
-		// console.log('DEV MODE!')
-	} else {
-		// console.log('not dev mode :(')
-	}
-
-	const endpointUrl = `${domain}/api/bets/fetch-all`
+	const endpointUrl = createApiRoute('bets/fetch-all')
 
 	try {
 		const res = await fetch(endpointUrl)

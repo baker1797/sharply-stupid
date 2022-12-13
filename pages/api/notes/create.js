@@ -12,6 +12,7 @@ export default async (req, res) => {
 		const note = NoteModel({
 			title: parseInputFromRequestBody(reqBody, "title"),
 			body: parseInputFromRequestBody(reqBody, "body"),
+			week: parseInputFromRequestBody(reqBody, "week"),
 			// bullets: parseInputFromRequestBody(reqBody, "bullets"),
 			teamTags: reqBody.teamTags
 		})

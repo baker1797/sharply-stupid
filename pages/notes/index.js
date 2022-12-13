@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
 import { Note as NoteModel } from './../../lib/models'
-import { renderStatus } from './../../lib/helpers'
+import { renderStatus, createApiRoute } from './../../lib/helpers'
 import { NflTeams as teams, weeks } from './../../lib/nfl'
 
 const alertStatus = {
@@ -33,25 +33,12 @@ const editorStatus = {
  * @returns 
  */
 async function fetchNotes() {
-	// console.log('notes :: getServerSideProps')
-
-	let domain = 'http://sharply-stupid.herokuapp.com';
 	let notes = [];
-
-	if (process.env.NODE_ENV == 'development') {
-		domain = 'http://localhost:3000';
-		// console.log('DEV MODE!')
-	} else {
-		// console.log('not dev mode :(')
-	}
-
-	const endpointUrl = `${domain}/api/notes/fetch`
+	const endpointUrl = createApiRoute('notes/fetch')
 
 	try {
 		const res = await fetch(endpointUrl)
 		notes = await res.json()
-
-		// console.log(notes.data)
 	} catch (fetchError) {
 		console.log(fetchError)
 	}
@@ -143,10 +130,14 @@ export default class Notes extends React.Component {
 				})
 			)
         }).then(() => {
+			this.setState({
+				status: alertStatus.SUCCESS
+			})
+
 			setTimeout(() => {
 				this.setState({
-					status: alertStatus.SUCCESS,
-					editorStatus: editorStatus.CLOSED
+					editorStatus: editorStatus.CLOSED,
+					editorButtonText: 'Add Note'
 				})
 			}, 750)
 
@@ -221,7 +212,7 @@ export default class Notes extends React.Component {
 								>
 									{
 										teams.map((team) => {
-											return <MenuItem key={team.key} value={team.key}>{team.label}</MenuItem>
+											return <MenuItem key={team.key} value={team.key}>{this.renderTeamIcons([team.key])}&nbsp;{team.location} {team.name}</MenuItem>
 										})
 									}
 								</Select>
@@ -285,10 +276,32 @@ export default class Notes extends React.Component {
 		const date = new Date(ts)
 
 		return [
-			date.getMonth(),
+			date.getMonth() + 1,
 			date.getDate(),
-			date.getYear(),
+			date.getFullYear()
 		].join('/')
+	}
+
+	renderNoteBody(body) {
+		if (body && body.length) {
+			return <p>{body}</p>
+		}
+	}
+
+	renderNoteBullets(bullets, noteIndex) {
+		if (bullets && bullets.length > 0) {
+			return (
+				<ul>
+					{
+						bullets.map((bullet, bulletIndex) => {
+							return (
+								<li key={noteIndex + "_" + bulletIndex}>{bullet.body}</li>
+							)
+						})
+					}
+				</ul>
+			)
+		}
 	}
 
 	renderNotes() {
@@ -304,25 +317,23 @@ export default class Notes extends React.Component {
 				{
 					this.props.notes.sort((a,b) => b.ts - a.ts).map((note, noteIndex) => {
 						return (
-							<Grid item xs={12} key={"note_" & noteIndex}>
+							<Grid item xs={12} key={"note_" + noteIndex}>
 								<Card sx={{pl:2, pr:2, position: "relative"}}>
 									<h3>
 										<Grid container>
 											<Grid item xs={1}>{ this.renderTeamIcons(note.data.teamTags) }</Grid>
-											<Grid item xs={11}>{note.data.title}</Grid>
+											<Grid item xs={9}>{note.data.title}</Grid>
+											<Grid item xs={2} align="right" sx={{fontSize: "small"}}>
+												{ note.data.week ? "Week: " + note.data.week : '' }
+												{
+													// TODO render playoff week titles
+												}
+											</Grid>
 										</Grid>
 									</h3>
-									<p>{note.data.body}</p>
-									<ul>
-										{
-											note.data.bullets.map((bullet, bulletIndex) => {
-												return (
-													<li key={noteIndex & "_" & bulletIndex}>{bullet.body}</li>
-												)
-											})
-										}
-									</ul>
-									{/* <i>{this.renderTimestamp(note.ts)}</i> */}
+									{ this.renderNoteBody(note.data.body) }
+									{ this.renderNoteBullets(note.data.bullets, noteIndex) }
+									<p align="right"><sub><i>{this.renderTimestamp(note.ts/1000)}</i></sub></p>
 								</Card>
 							</Grid>
 						)
