@@ -20,7 +20,9 @@ export default class CountItAction extends React.Component {
 
 		this.state = {
 			actionType: props.actionType,
-			status: null
+			status: null,
+			away_name: "",
+			home_name: ""
 		}
 
 		this.handleActionTypeChange = this.handleActionTypeChange.bind(this)
@@ -124,8 +126,8 @@ export default class CountItAction extends React.Component {
 	 * @returns 
 	 */
 	renderActionDetails(actionType) {
-		console.log('renderActionDetails')
-		console.log(actionType)
+		// console.log('renderActionDetails')
+		// console.log(actionType)
 	
 		switch(actionType) {
 			case 'watch':
@@ -152,7 +154,7 @@ export default class CountItAction extends React.Component {
 						<h1>Count It</h1>
 						<h3>Track my Action</h3>
 
-						<FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
+						<FormControl fullWidth variant="standard" sx={{ m: 1, minWidth: 120 }}>
 							<Select
 								labelId="Action"
 								className="action_input"
@@ -168,22 +170,23 @@ export default class CountItAction extends React.Component {
 									})
 								}
 							</Select>
-							<Card className={styles.card}>
-								<CardContent>
-									{this.renderActionDetails(this.state.actionType)}
-								</CardContent>
-
-								<CardContent>
-									{ renderStatus(this.state.status, 'Action') }
-								</CardContent>
-								
-								<CardActions>
-									<Button id="new-bet-submit" variant="contained" onClick={this.handleSubmit}>
-										Count it!
-									</Button>
-								</CardActions>
-							</Card>
 						</FormControl>
+						
+						<Card className={styles.card}>
+							<CardContent>
+								{this.renderActionDetails(this.state.actionType)}
+							</CardContent>
+
+							<CardContent>
+								{ renderStatus(this.state.status, 'Action') }
+							</CardContent>
+							
+							<CardActions>
+								<Button id="new-bet-submit" variant="contained" onClick={this.handleSubmit}>
+									Count it!
+								</Button>
+							</CardActions>
+						</Card>
 					</main>
 				</Container>
 

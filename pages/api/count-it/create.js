@@ -2,7 +2,7 @@ import { createDb, parseInputFromRequestBody } from  '../../../lib/helpers'
 
 export default async (req, res) => {
     try {
-        const db = createDb(FAUNA_SECRET_COUNT_IT)
+        const db = createDb(process.env.FAUNA_SECRET_COUNT_IT)
         const reqBody = JSON.parse(req.body)
         let fan;
 

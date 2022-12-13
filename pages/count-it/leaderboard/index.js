@@ -29,16 +29,18 @@ export default class CountItLeaderboard extends React.Component {
             <div className={styles.container}>
                 <Head>
                     <title>Count It! Leaderboard</title>
-                    <link rel="icon" href="/favicon.ico" />
                 </Head>
                 <Container>
                     <main>
                         <h1>Count It!</h1>
                         <h3>Week {this.state.week}</h3>
                         <ol>
-                            {this.state.actions.data.map((action) => (
-                                <li key={action.ts}>{action.data.fan['@ref'].id} ({action.data.away_name},{action.data.home_name},{action.data.away_score},{action.data.home_score})</li>
-                            ))}
+                            {console.log(this.state.actions)}
+                            {
+                                this.state.actions.map((action) => {
+                                    <li key={action.ts}>{action.data.fan['@ref'].id} ({action.data.away_name},{action.data.home_name},{action.data.away_score},{action.data.home_score})</li>
+                                })
+                            }
                         </ol>
                     </main>
                 </Container>
