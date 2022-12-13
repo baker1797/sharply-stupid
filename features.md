@@ -3,6 +3,11 @@
 - [ ] Make Next.js render as SPA
     - currently re-renders
     - rewrites? https://nextjs.org/docs/api-reference/next.config.js/rewrites
+- [ ] mappings for value, label, name, id, key
+	- shared between next and fauna
+	- new FormData('note')
+	- new FormData('bet')
+	- new FormData('action', actionData)
 
 ## Side bets
 - [x] READ: View all bets
@@ -24,6 +29,7 @@
     - content String
 - [ ] CREATE: Upload 
     - easy manually for a little while
+
 
 ## Dynasty Values
 - [ ] READ: View all Players w/ current rank + value

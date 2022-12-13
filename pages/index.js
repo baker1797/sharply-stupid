@@ -5,7 +5,6 @@ import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Link from 'next/link'
-import AddBoxIcon from '@mui/icons-material/AddBox';
 
 export default class Home extends React.Component {
 	constructor(props) {
@@ -35,6 +34,12 @@ export default class Home extends React.Component {
 							<Button variant="contained">
 								<Link href="/bets" sx={{ color: "white", textDecoration: "none" }}>
 									Side Bets
+								</Link>
+							</Button>
+
+							<Button variant="contained">
+								<Link href="/Notes" sx={{ color: "white !important", textDecoration: "none" }}>
+									Blog
 								</Link>
 							</Button>
 						</Stack>

@@ -6,12 +6,12 @@ import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import FormControl from '@mui/material/FormControl';
-import Alert from '@mui/material/Alert';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import NavBottom from './../components/nav-bottom';
 import WatchInput from './../components/WatchInput';
+import { renderStatus } from './../../../lib/helpers'
 
 export default class CountItAction extends React.Component {
 
@@ -115,22 +115,6 @@ export default class CountItAction extends React.Component {
 		})
 
 	}
-	
-	/**
-	 * TODO - move this to components
-	 * @returns 
-	 */
-	renderStatus() {
-		if (this.state.status === 'success') {
-			return ( <Alert severity="success">Action added!</Alert> )
-		} else if (this.state.status === 'error') {
-			return ( <Alert severity="error">Ya done goofed!</Alert> )
-		} else if (this.state.status === 'processing') {
-			return ( <Alert severity="info">Processing, hang on!</Alert> )
-		} else {
-			return ( '' )
-		}
-	}
 
 	/**
 	 * Render Action Details
@@ -190,7 +174,7 @@ export default class CountItAction extends React.Component {
 								</CardContent>
 
 								<CardContent>
-									{ this.renderStatus() }
+									{ renderStatus(this.state.status, 'Action') }
 								</CardContent>
 								
 								<CardActions>

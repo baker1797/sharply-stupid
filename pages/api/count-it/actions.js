@@ -1,32 +1,19 @@
-import faunadb, { Paginate } from 'faunadb'
-import { parseInputFromRequestBody } from  './../../../lib/helpers'
+import { createDb, parseInputFromRequestBody } from  './../../../lib/helpers'
 
 export default async (req, res) => {
     try {
-        const q = faunadb.query; // todo - remove this in favor of functions
-        const {
-            Select,
-            Get,
-            Match,
-            Index
-        } = faunadb.query
-
-        const client = new faunadb.Client({
-            secret: process.env.FAUNA_SECRET_COUNT_IT,
-            domain: 'db.us.fauna.com',
-            scheme: 'https',
-        });
-
+        const db = createDb()
         const reqBody = JSON.parse(req.body)
+
         let fanName = parseInputFromRequestBody(reqBody, 'fan_name');
 
         try {
             const actions = await client.query(
                 // TODO does this need a map lambda method?
-                Paginate(
-                    Match(
-                        Index("actions_per_fan"),
-                        Select('ref', Get(Match(Index('fans_by_name'), fanName)))
+                db.q.Paginate(
+                    db.q.Match(
+                        db.q.Index("actions_per_fan"),
+                        db.q.Select('ref', db.q.Get(db.q.Match(db.q.Index('fans_by_name'), fanName)))
                     )
                 )
             )

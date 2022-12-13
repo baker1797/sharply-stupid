@@ -6,10 +6,10 @@ import Card from '@mui/material/Card';
 import TextField from '@mui/material/TextField';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import NavBottom from './components/nav-bottom';
+import { renderStatus } from './../../lib/helpers'
 
 export default class NewBetCard extends React.Component {
 
@@ -87,22 +87,6 @@ export default class NewBetCard extends React.Component {
           [name]: value
         });
     }
-    
-    /**
-     * TODO - move this to components
-     * @returns 
-     */
-    renderStatus() {
-        if (this.state.status === 'success') {
-            return ( <Alert severity="success">Bet added!</Alert> )
-        } else if (this.state.status === 'error') {
-            return ( <Alert severity="error">Ya done goofed!</Alert> )
-        } else if (this.state.status === 'processing') {
-            return ( <Alert severity="info">Processing, hang on!</Alert> )
-        } else {
-            return ( '' )
-        }
-    }
 
     render() {
         return (
@@ -153,7 +137,7 @@ export default class NewBetCard extends React.Component {
                                 </Button> */}
                             </CardActions>
 
-                            { this.renderStatus() }
+                            { renderStatus(this.state.status, 'Bet') }
 
                         </CardContent>
                     </Card>

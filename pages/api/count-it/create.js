@@ -1,32 +1,14 @@
-import faunadb from 'faunadb'
-import { parseInputFromRequestBody } from  '../../../lib/helpers'
+import { createDb, parseInputFromRequestBody } from  '../../../lib/helpers'
 
 export default async (req, res) => {
     try {
-        const q = faunadb.query; // todo - remove this in favor of functions
-        const {
-            Select,
-            Get,
-            Match,
-            Index,
-            Create,
-            Collection
-        } = faunadb.query
-
-        const client = new faunadb.Client({
-            secret: process.env.FAUNA_SECRET_COUNT_IT,
-            domain: 'db.us.fauna.com',
-            scheme: 'https',
-        });
-
+        const db = createDb(FAUNA_SECRET_COUNT_IT)
         const reqBody = JSON.parse(req.body)
-
-        
         let fan;
 
         try {
             const fanName = parseInputFromRequestBody(reqBody, 'fan_name')
-            fan = Select('ref', Get(Match(Index('fans_by_name'), fanName)))
+            fan = db.q.Select('ref', db.q.Get(db.q.Match(db.q.Index('fans_by_name'), fanName)))
             console.log(fan)
         } catch(error) {
             throw Error("invalid user name")
@@ -42,11 +24,11 @@ export default async (req, res) => {
             // TODO - week
         }
         
-        await client.query(
-            q.If(
-                q.Exists(q.Collection('actions')),
+        await db.client.query(
+            db.q.If(
+                db.q.Exists(db.q.Collection('actions')),
                 null,
-                q.CreateCollection({ name: 'actions' })
+                db.q.CreateCollection({ name: 'actions' })
             )
         )
         .then((qResponse) => {
@@ -57,11 +39,11 @@ export default async (req, res) => {
         });
 
         // Store the data in Fauna
-        await client.query(
-          Create(
-            Collection('actions'),
-            { data: actionData }
-          )
+        await db.client.query(
+            db.q.Create(
+                db.q.Collection('actions'),
+                { data: actionData }
+            )
         )
         .then((qResponse) => {
             console.log('Action added')
