@@ -29,6 +29,9 @@ export default function WeeklyBets({ data }) {
 					
 					<Grid container spacing={{ xs: 1, sm: 2, md: 3 }} columns={{ xs: 2, sm: 8, md: 12 }}>
 						{
+							// TODO
+							// - https://mui.com/material-ui/react-transfer-list/
+							// - take action
 							data.data.map((bet, betIndex) => {
 								return (
 									<Grid item xs={2} sm={4} md={4} key={betIndex}>

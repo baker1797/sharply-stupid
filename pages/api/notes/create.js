@@ -6,12 +6,17 @@ export default async (req, res) => {
 		const db = createDb(process.env.FAUNA_SECRET_NOTES)
 		const reqBody = JSON.parse(req.body)
 
+		// TODOs:
+		// - preserve whitespace / breaks
+		// - support bullets in the UI
 		const note = NoteModel({
 			title: parseInputFromRequestBody(reqBody, "title"),
-			body: parseInputFromRequestBody(reqBody, "body")
+			body: parseInputFromRequestBody(reqBody, "body"),
+			// bullets: parseInputFromRequestBody(reqBody, "bullets"),
+			teamTags: reqBody.teamTags
 		})
 
-		// Store the post in Fauna
+		// Store the note in Fauna
 		await db.client.query(
 			db.q.Create(
 				db.q.Collection('notes'),
@@ -19,7 +24,7 @@ export default async (req, res) => {
 			)
 		)
 			.then((qResponse) => {
-				console.log('Post added')
+				console.log('Note added')
 				res.status(200).json({ data: qResponse })
 			})
 			.catch((err) => {
