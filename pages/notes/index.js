@@ -183,7 +183,7 @@ export default class Notes extends React.Component {
 				<Card sx={{mb: 2, p: 2}}>
 					<Grid container align="center" spacing={1.5}>
 						<Grid item xs={12} md={6}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
+							<FormControl fullWidth variant="standard">
 								<InputLabel id="week-label">Week</InputLabel>
 								<Select
 									labelId="week-label"
@@ -286,12 +286,28 @@ export default class Notes extends React.Component {
 
 	renderTimestamp(ts) {
 		const date = new Date(ts)
-
-		return [
+		let timestamp = [
 			date.getMonth() + 1,
 			date.getDate(),
 			date.getFullYear()
 		].join('/')
+		
+		let hours = date.getHours() % 12
+		
+		if (hours === 0) {
+			hours = 12
+		}
+
+		let minutes = date.getMinutes()
+
+		if ((minutes + "").length === 1) {
+			minutes = "0" + minutes
+		}
+
+		timestamp += " " + hours + ":" + minutes
+		timestamp += (date.getHours() / 12 > 0) ? "pm" : "am"
+		
+		return timestamp
 	}
 
 	renderPrimaryImage(images) {
@@ -304,7 +320,6 @@ export default class Notes extends React.Component {
 				</a>
 			)
 		}
-
 	}
 
 	renderNoteBody(body) {
@@ -362,7 +377,7 @@ export default class Notes extends React.Component {
 									<Grid container mb={1}>
 										<Grid item xs={12} align="right">
 											<sub>
-												<i>{ note.data.author } &bull; { this.renderTimestamp(note.ts/1000) }</i>
+												<i>{ note.data.author || "anonymous" } &bull; { this.renderTimestamp(note.ts/1000) }</i>
 											</sub>
 										</Grid>
 									</Grid>
