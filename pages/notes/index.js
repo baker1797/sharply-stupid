@@ -276,6 +276,7 @@ export default class Notes extends React.Component {
 			const imgSrc = `./images/${teamTags[0]}.png`
 
 			return (
+				// TODO - replace with <Image/>
 				<img src={imgSrc} width={24} />
 			)
 		} else {
@@ -298,7 +299,7 @@ export default class Notes extends React.Component {
 			const imgSrc = `./uploads/${images[0]}`
 
 			return (
-				<a href={imgSrc} target="_blank">
+				<a href={imgSrc} target="_blank" rel="noreferrer">
 					<img src={imgSrc} width="100%"/>
 				</a>
 			)
@@ -380,6 +381,7 @@ export default class Notes extends React.Component {
 			<div className={styles.container}>
 				<Head>
 					<title>Notes | Sharply Stupid</title>
+					<link rel="icon" href="/favicon.ico" />
 				</Head>
 
 				<h1 className={styles.title}>NFL Insights</h1>
