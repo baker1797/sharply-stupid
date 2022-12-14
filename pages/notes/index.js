@@ -181,7 +181,7 @@ export default class Notes extends React.Component {
 
 			return (
 				<Card sx={{mb: 2, p: 2}}>
-					<Grid container align="center" spacing={2}>
+					<Grid container align="center" spacing={1.5}>
 						<Grid item xs={12} md={6}>
 							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
 								<InputLabel id="week-label">Week</InputLabel>
@@ -202,7 +202,7 @@ export default class Notes extends React.Component {
 						</Grid>
 	
 						<Grid item xs={12} md={6}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
+							<FormControl fullWidth variant="standard">
 								<InputLabel id="team-label">Team</InputLabel>
 								<Select
 									labelId="team-label"
@@ -220,7 +220,7 @@ export default class Notes extends React.Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
+							<FormControl fullWidth variant="standard">
 								<TextField
 									id="new-note-author"
 									label="Author"
@@ -231,7 +231,7 @@ export default class Notes extends React.Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
+							<FormControl fullWidth variant="standard">
 								<TextField
 									id="new-note-title"
 									label="Title"
@@ -242,7 +242,7 @@ export default class Notes extends React.Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
+							<FormControl fullWidth variant="standard">
 								<TextField
 									id="new-note-body"
 									label="Notes"
@@ -328,20 +328,20 @@ export default class Notes extends React.Component {
 				{
 					this.props.notes.sort((a,b) => b.ts - a.ts).map((note, noteIndex) => {
 						return (
-							<Grid item xs={12} key={"note_" + noteIndex}>
+							<Grid item xs={12} sm={6} lg={4} key={"note_" + noteIndex}>
 								<Card sx={{pl:2, pr:2, position: "relative"}}>
-									<h3>
+									<h4>
 										<Grid container>
 											<Grid item xs={1}>{ this.renderTeamIcons(note.data.teamTags) }</Grid>
-											<Grid item xs={9}>{note.data.title}</Grid>
-											<Grid item xs={2} align="right" sx={{fontSize: "small"}}>
+											<Grid item xs={8}>{note.data.title}</Grid>
+											<Grid item xs={3} align="right" sx={{fontSize: "small", fontWeight: "light"}}>
 												{ note.data.week ? "Week: " + note.data.week : '' }
 												{
 													// TODO render playoff week titles
 												}
 											</Grid>
 										</Grid>
-									</h3>
+									</h4>
 									{ this.renderNoteBody(note.data.body) }
 									{ this.renderNoteBullets(note.data.bullets, noteIndex) }
 									<Grid container mb={1}>
