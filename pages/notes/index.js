@@ -293,6 +293,19 @@ export default class Notes extends React.Component {
 		].join('/')
 	}
 
+	renderPrimaryImage(images) {
+		if (images && images[0]) {
+			const imgSrc = `./uploads/${images[0]}`
+
+			return (
+				<a href={imgSrc} target="_blank">
+					<img src={imgSrc} width="100%"/>
+				</a>
+			)
+		}
+
+	}
+
 	renderNoteBody(body) {
 		if (body && body.length) {
 			return <p style={{whiteSpace: "pre-line"}}>{body}</p>
@@ -342,6 +355,7 @@ export default class Notes extends React.Component {
 											</Grid>
 										</Grid>
 									</h4>
+									{ this.renderPrimaryImage(note.data.images) }
 									{ this.renderNoteBody(note.data.body) }
 									{ this.renderNoteBullets(note.data.bullets, noteIndex) }
 									<Grid container mb={1}>
