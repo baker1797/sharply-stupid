@@ -286,11 +286,6 @@ export default class Notes extends React.Component {
 
 	renderTimestamp(ts) {
 		const date = new Date(ts)
-		let timestamp = [
-			date.getMonth() + 1,
-			date.getDate(),
-			date.getFullYear()
-		].join('/')
 		
 		let hours = date.getHours() % 12
 		
@@ -304,10 +299,16 @@ export default class Notes extends React.Component {
 			minutes = "0" + minutes
 		}
 
-		timestamp += " " + hours + ":" + minutes
-		timestamp += (date.getHours() / 12 > 0) ? "pm" : "am"
+		const dateOutput = [
+			date.getMonth() + 1,
+			date.getDate(),
+			date.getFullYear()
+		].join('/')
+
+		const time = " " + hours + ":" + minutes
+		const amPm = (date.getHours() / 12 > 0) ? "pm" : "am"
 		
-		return timestamp
+		return "".concat(dateOutput, time, amPm)
 	}
 
 	renderPrimaryImage(images) {
