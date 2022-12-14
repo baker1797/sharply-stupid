@@ -1,9 +1,9 @@
-import * as React from 'react';
+import * as React from 'react'
 import Head from 'next/head'
 import styles from '/styles/Home.module.css'
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
+import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
 import Link from 'next/link'
 
 export default class Home extends React.Component {
@@ -26,19 +26,19 @@ export default class Home extends React.Component {
 
 						<Stack spacing={2}>
 							<Button variant="contained">
-								<Link href="/count-it" sx={{ color: "white", textDecoration: "none" }}>
+								<Link href="/count-it" underline="none">
 									Count It!
 								</Link>
 							</Button>
 
 							<Button variant="contained">
-								<Link href="/bets" sx={{ color: "white", textDecoration: "none" }}>
+								<Link href="/bets">
 									Side Bets
 								</Link>
 							</Button>
 
 							<Button variant="contained">
-								<Link href="/Notes" sx={{ color: "white !important", textDecoration: "none" }}>
+								<Link href="/notes">
 									Blog
 								</Link>
 							</Button>

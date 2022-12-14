@@ -9,21 +9,12 @@ export default class CountItLeaderboard extends React.Component {
 
     constructor(props) {
         super(props)
-        console.log('props')
-        console.log(props)
+
         this.state = {
-            leader: "Kyle Baker",
             week: 10,
-            // leaders: props.leaders
-            actions: props.actions
+            actions: props.actions.data
         }
     }
-
-    // GET all leaders
-    // GET all action by Leader
-    // JOIN all leaders & SUM(actions.each(return action.points))
-    // return Name & Points
-    // render Leaders.sort(points).map()
 
     render() {
         return (
@@ -39,7 +30,7 @@ export default class CountItLeaderboard extends React.Component {
                             {console.log(this.state.actions)}
                             {
                                 this.state.actions.map((action) => {
-                                    <li key={action.ts}>{action.data.fan['@ref'].id} ({action.data.away_name},{action.data.home_name},{action.data.away_score},{action.data.home_score})</li>
+                                    return <li key={action.ts}>{action.data.fan['@ref'].id} ({action.data.away_name},{action.data.home_name},{action.data.away_score},{action.data.home_score})</li>
                                 })
                             }
                         </ol>
@@ -64,15 +55,13 @@ export async function getServerSideProps() {
 
 	try {
 		const res = await fetch(endpointUrl, {
-            method: 'POST',
-            body: JSON.stringify({
-				fan_name: "Jason Kwok"
-			})
+            method: 'POST'
+            // body: JSON.stringify({
+			// 	fan_name: "Jason Kwok"
+			// })
 		})
 
-        // TODO - this is returning an array not an object
 		data = await res.json()
-        console.log(data)
 
 	} catch (fetchError) {
 		data = {

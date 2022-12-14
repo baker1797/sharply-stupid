@@ -3,8 +3,9 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import { NbaTeams as teams } from './../../../lib/nba'
 
-const teams = ['ATL', 'PHI', 'NO', 'GSW']
 
 export default function WatchInput() {
     return (
@@ -23,31 +24,31 @@ export default function WatchInput() {
             </Grid>
 
             { /* Away */ }
-            <Grid item xs={4}>
+            <Grid item xs={8}>
                 <FormControl fullWidth variant="standard">
+                    <InputLabel id="away-label">Away</InputLabel>
                     <Select
-                        labelId="Action"
+                        labelId="away-label"
                         id="away-name"
                         className="action_input"
                         name="away_name"
-                        // value={this.state.away_name}
-                        label="Select Action"
+                        // onChange={this.handleSelectChange}
                     >
                         {
-                            teams.map((option) => {
-                                return <MenuItem key={`away-${option}`} value={option}>{option}</MenuItem>
+                            teams.map((team) => {
+                                return <MenuItem key={`away-${team.key}`} value={team.key}>{team.location} {team.name}</MenuItem>
                             })
                         }
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={4}>
                 <FormControl fullWidth variant="standard">
                     <TextField
                         key="away-score"
                         id="away-score"
                         className="action_input"
-                        label="Away Score"
+                        label="Score"
                         name="away_score"
                     />
                 </FormControl>
@@ -55,31 +56,31 @@ export default function WatchInput() {
 
 
             { /* Home */ }
-            <Grid item xs={4}>
+            <Grid item xs={8}>
                 <FormControl fullWidth variant="standard">
+                    <InputLabel id="home-label">Home</InputLabel>
                     <Select
-                        labelId="Action"
+                        labelId="home-label"
                         id="home-name"
                         className="action_input"
                         name="home_name"
-                        // value={this.state.home_name}
-                        label="Select Action"
+                        // onChange={this.handleSelectChange}
                     >
                         {
-                            teams.map((option) => {
-                                return <MenuItem key={`home-${option}`} value={option}>{option}</MenuItem>
+                            teams.map((team) => {
+                                return <MenuItem key={`home-${team.key}`} value={team.key}>{team.location} {team.name}</MenuItem>
                             })
                         }
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={8}>
+            <Grid item xs={4}>
                 <FormControl fullWidth variant="standard">
                     <TextField
                         key="home-score"
                         id="home-score"
                         className="action_input"
-                        label="Home Score"
+                        label="Score"
                         name="home_score"
                     />
                 </FormControl>

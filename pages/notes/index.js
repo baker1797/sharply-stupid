@@ -57,7 +57,6 @@ export default class Notes extends React.Component {
 			editorStatus: editorStatus.CLOSED,
 			editorButtonText: 'Add Note',
 			notes: this.props.notes,
-			week: 15,
 			category: 'gambling',
 			newNote: NoteModel()
 		}
@@ -70,7 +69,10 @@ export default class Notes extends React.Component {
 
 	handleSelectChange(event) {
 		this.setState({
-			[event.target.name]: event.target.value
+			newNote: {
+				...this.state.newNote,
+				week: event.target.value
+			}
 		})
 	}
 
@@ -78,7 +80,14 @@ export default class Notes extends React.Component {
 		// TODO - "push" is desired, but the UI doesn't support it
 		// this.state.newNote.teamTags.push(event.target.value)
 		
-		this.state.newNote.teamTags[0] = event.target.value
+		this.setState({
+			newNote: {
+				...this.state.newNote,
+				teamTags: [
+					event.target.value
+				]
+			}
+		})
 	}
 
 	/**
@@ -117,13 +126,13 @@ export default class Notes extends React.Component {
         this.setState({
             status: alertStatus.PROCESSING
         })
-
+		
         fetch('/api/notes/create', {
             method: 'POST',
             body: JSON.stringify(
 				NoteModel({
-					week: document.getElementById('new-note-week').value,
-					// category: document.getElementById('new-note-category').value,
+					week: this.state.newNote.week,
+					author: document.getElementById('new-note-author').value,
 					title: document.getElementById('new-note-title').value,
 					body: document.getElementById('new-note-body').value,
 					teamTags: this.state.newNote.teamTags
@@ -140,13 +149,7 @@ export default class Notes extends React.Component {
 					editorButtonText: 'Add Note'
 				})
 			}, 750)
-
-			// fetchNotes().then((data) => {
-			// 	this.setState({
-			// 		notes: data.props.notes
-			// 	})
-			// 	console.log(this.state)
-			// })
+			
 		}).catch((error) => {
 
             this.setState({
@@ -180,14 +183,13 @@ export default class Notes extends React.Component {
 				<Card sx={{mb: 2, p: 2}}>
 					<Grid container align="center" spacing={2}>
 						<Grid item xs={12} md={6}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1, minWidth: 120 }}>
+							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
 								<InputLabel id="week-label">Week</InputLabel>
 								<Select
 									labelId="week-label"
-									// className="action_input"
 									id="new-note-week"
 									name="week"
-									value={this.state.week}
+									value={this.state.newNote.week}
 									onChange={this.handleSelectChange}
 								>
 									{
@@ -200,14 +202,12 @@ export default class Notes extends React.Component {
 						</Grid>
 	
 						<Grid item xs={12} md={6}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1, minWidth: 120 }}>
+							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
 								<InputLabel id="team-label">Team</InputLabel>
 								<Select
 									labelId="team-label"
-									// className="action_input"
 									id="new-note-team"
 									name="teamTag"
-									value={this.state.newNote.teamTags[0]}
 									onChange={this.handleTeamTagSelectChange}
 								>
 									{
@@ -220,7 +220,18 @@ export default class Notes extends React.Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1, minWidth: 120 }}>
+							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
+								<TextField
+									id="new-note-author"
+									label="Author"
+									name="author"
+									fullWidth
+								/>
+							</FormControl>
+						</Grid>
+
+						<Grid item xs={12}>
+							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
 								<TextField
 									id="new-note-title"
 									label="Title"
@@ -231,10 +242,10 @@ export default class Notes extends React.Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							<FormControl fullWidth variant="standard" sx={{ m: 1, minWidth: 120 }}>
+							<FormControl fullWidth variant="standard" sx={{ m: 1 }}>
 								<TextField
 									id="new-note-body"
-									label="Description"
+									label="Notes"
 									name="body"
 									fullWidth
 									multiline
@@ -284,7 +295,7 @@ export default class Notes extends React.Component {
 
 	renderNoteBody(body) {
 		if (body && body.length) {
-			return <p>{body}</p>
+			return <p style={{whiteSpace: "pre-line"}}>{body}</p>
 		}
 	}
 
@@ -333,7 +344,14 @@ export default class Notes extends React.Component {
 									</h3>
 									{ this.renderNoteBody(note.data.body) }
 									{ this.renderNoteBullets(note.data.bullets, noteIndex) }
-									<p align="right"><sub><i>{this.renderTimestamp(note.ts/1000)}</i></sub></p>
+									<Grid container mb={1}>
+										<Grid item xs={12} align="right">
+											<sub>
+												<i>{ note.data.author } &bull; { this.renderTimestamp(note.ts/1000) }</i>
+											</sub>
+										</Grid>
+									</Grid>
+									
 								</Card>
 							</Grid>
 						)

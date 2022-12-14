@@ -13,6 +13,7 @@ export default async (req, res) => {
 			title: parseInputFromRequestBody(reqBody, "title"),
 			body: parseInputFromRequestBody(reqBody, "body"),
 			week: parseInputFromRequestBody(reqBody, "week"),
+			author: parseInputFromRequestBody(reqBody, "author"),
 			// bullets: parseInputFromRequestBody(reqBody, "bullets"),
 			teamTags: reqBody.teamTags
 		})

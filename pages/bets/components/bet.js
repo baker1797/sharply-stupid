@@ -1,12 +1,11 @@
 import * as React from 'react';
-import styles from '/styles/Home.module.css'
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
-import DeleteIcon from '@mui/icons-material/Delete';
+import Card from '@mui/material/Card'
+import CardActions from '@mui/material/CardActions'
+import CardContent from '@mui/material/CardContent'
+import IconButton from '@mui/material/IconButton'
+import Typography from '@mui/material/Typography'
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 const printDate = (date) => {
 	let printDate = ''
@@ -33,7 +32,7 @@ export default function BetCard({ data }) {
 	} = data;
 
 	return (
-		<Card className={styles.card}>
+		<Card sx={{mb: 2}}>
 			<CardContent sx={{ minheight: 150 }}>
 				<Typography variant="h5" component="div">
 					{away_team}

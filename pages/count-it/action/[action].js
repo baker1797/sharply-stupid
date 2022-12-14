@@ -19,10 +19,13 @@ export default class CountItAction extends React.Component {
 		super(props)
 
 		this.state = {
-			actionType: props.actionType,
 			status: null,
+			actionType: props.actionType,
+			fan: "",
 			away_name: "",
-			home_name: ""
+			home_name: "",
+			away_score: "",
+			home_score: ""
 		}
 
 		this.handleActionTypeChange = this.handleActionTypeChange.bind(this)
@@ -61,13 +64,27 @@ export default class CountItAction extends React.Component {
 	 * 
 	 * @param {*} event 
 	 */
-	handleActionTypeChange(event) {
+	 handleActionTypeChange(event) {
 		console.log('handleActionTypeChange')
 
 		const target = event.target
 
 		this.setState({
 			actionType: target.value
+		})
+	}
+
+	/**
+	 * 
+	 * @param {*} event 
+	 */
+	handleSelectChange(event) {
+		console.log('handleSelectChange')
+
+		const target = event.target
+
+		this.setState({
+			[event.target.name]: target.value
 		})
 	}
 
@@ -172,7 +189,7 @@ export default class CountItAction extends React.Component {
 							</Select>
 						</FormControl>
 						
-						<Card className={styles.card}>
+						<Card>
 							<CardContent>
 								{this.renderActionDetails(this.state.actionType)}
 							</CardContent>
