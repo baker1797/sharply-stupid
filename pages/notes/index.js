@@ -13,7 +13,7 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
-import { Note as NoteModel } from './../../lib/models'
+import { Note as NoteModel, authors} from './../../lib/models'
 import { renderStatus, renderTeamIcons, renderTimestamp } from './../../lib/render'
 import { fetchNotes } from './../../lib/queries'
 import { NflTeams as teams, weeks } from './../../lib/nfl'
@@ -46,6 +46,7 @@ export default class Notes extends React.Component {
 
 		this.handleSelectChange = this.handleSelectChange.bind(this)
 		this.handleTeamTagSelectChange = this.handleTeamTagSelectChange.bind(this)
+		this.handleAuthorSelectChange = this.handleAuthorSelectChange.bind(this)
 		this.handleAddNoteToggle = this.handleAddNoteToggle.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
@@ -67,6 +68,17 @@ export default class Notes extends React.Component {
 			newNote: {
 				...this.state.newNote,
 				teamTags: [
+					event.target.value
+				]
+			}
+		})
+	}
+
+	handleAuthorSelectChange(event) {
+		this.setState({
+			newNote: {
+				...this.state.newNote,
+				author: [
 					event.target.value
 				]
 			}
@@ -115,7 +127,8 @@ export default class Notes extends React.Component {
             body: JSON.stringify(
 				NoteModel({
 					week: this.state.newNote.week,
-					author: document.getElementById('new-note-author').value,
+					author: this.state.newNote.author,
+					// author: document.getElementById('new-note-author').value,
 					title: document.getElementById('new-note-title').value,
 					body: document.getElementById('new-note-body').value,
 					teamTags: this.state.newNote.teamTags
@@ -134,8 +147,10 @@ export default class Notes extends React.Component {
 
 				const updatedNotes = await fetchNotes();
 
+				console.log(updatedNotes)
+
 				this.setState({
-					notes: updatedNotes.props.notes
+					notes: updatedNotes
 				})
 
 			}, 750)
@@ -218,11 +233,16 @@ export default class Notes extends React.Component {
 									labelId="team-label"
 									id="new-note-team"
 									name="teamTag"
+									value={this.state.newNote.teamTags[0]}
 									onChange={this.handleTeamTagSelectChange}
 								>
 									{
 										teams.map((team) => {
-											return <MenuItem key={team.key} value={team.key}>{renderTeamIcons([team.key])}&nbsp;{team.location} {team.name}</MenuItem>
+											return (
+												<MenuItem key={team.key} value={team.key}>
+													{ renderTeamIcons([team.key]) } &nbsp; {team.location} {team.name}
+												</MenuItem>
+											)
 										})
 									}
 								</Select>
@@ -231,12 +251,24 @@ export default class Notes extends React.Component {
 
 						<Grid item xs={12}>
 							<FormControl fullWidth variant="standard">
-								<TextField
+								<InputLabel id="author-label">Author</InputLabel>
+								<Select
+									labelId="author-label"
 									id="new-note-author"
-									label="Author"
 									name="author"
-									fullWidth
-								/>
+									value={this.state.newNote.author}
+									onChange={this.handleAuthorSelectChange}
+								>
+									{
+										authors.map((author) => {
+											return (
+												<MenuItem key={author.key} value={author.key}>
+													{author.label}
+												</MenuItem>
+											)
+										})
+									}
+								</Select>
 							</FormControl>
 						</Grid>
 
@@ -328,18 +360,12 @@ export default class Notes extends React.Component {
 				{
 					this.state.notes.sort((a,b) => b.ts - a.ts).map((note, noteIndex) => {
 						return (
-							<Grid item xs={12} sm={6} lg={4} key={"note_" + noteIndex}>
+							<Grid item xs={12} sm={6} md={4} lg={3} key={"note_" + noteIndex}>
 								<Card sx={{pl:2, pr:2, position: "relative"}}>
 									<h4>
 										<Grid container>
-											<Grid item xs={1}>{ renderTeamIcons(note.data.teamTags) }</Grid>
-											<Grid item xs={8}>{note.data.title}</Grid>
-											<Grid item xs={3} align="right" sx={{fontSize: "small", fontWeight: "light"}}>
-												{ note.data.week ? "Week: " + note.data.week : '' }
-												{
-													// TODO render playoff week titles
-												}
-											</Grid>
+											<Grid item xs={1} sm={2}>{ renderTeamIcons(note.data.teamTags) }</Grid>
+											<Grid item xs={11} sm={10}>{note.data.title}</Grid>
 										</Grid>
 									</h4>
 									{ this.renderPrimaryImage(note.data.images) }
@@ -348,7 +374,7 @@ export default class Notes extends React.Component {
 									<Grid container mb={1}>
 										<Grid item xs={12} align="right">
 											<sub>
-												<i>{ note.data.author || "anonymous" } &bull; { renderTimestamp(note.ts/1000) }</i>
+												<i>{ note.data.week ? "Week: " + note.data.week : '' } &bull; { note.data.author || "anonymous" } &bull; { renderTimestamp(note.ts/1000) }</i>
 											</sub>
 										</Grid>
 									</Grid>
