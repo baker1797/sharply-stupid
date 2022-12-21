@@ -9,9 +9,8 @@ export default async (req, res) => {
 		db.q.Map(
 			db.q.Paginate(
 				db.q.Match(
-					// db.q.Index('all_matches'),
-					db.q.Index(reqBody && reqBody.week ? 'matches_by_week' : 'all_matches'),
-					reqBody && reqBody.week ? parseInt(reqBody.week) : null
+					db.q.Index('notes_by_team'),
+					reqBody.teamId
 				),
 				{ size: 100 }
 			),

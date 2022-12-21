@@ -10,6 +10,7 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import SendIcon from '@mui/icons-material/Send'
 import { Note as NoteModel } from '../../lib/models'
 import {
@@ -290,24 +291,13 @@ export default class Notes extends React.Component {
 												{renderTeamIcon(note.data.homeTeamId, 48)}
 												<div>{note.data.pregameHomeSpread > 0 ? '' : note.data.pregameHomeSpread}</div>
 											</Grid>
-											{/* <Grid item xs={12} align="center">Home Spread</Grid>
-											<Grid item xs={12} align="center" sx={{ fontSize: "small", fontWeight: "light" }}></Grid> */}
 											<Grid item xs={12} align="center">Total: {note.data.pregameTotal}</Grid>
-											<Grid item xs={12}><hr></hr></Grid>
-											<Grid item xs={12}>Notes</Grid>
-											<Grid item xs={8}>{note.data.title}</Grid>
+											<Grid item xs={12} align="center"><Link href={"/notes/match/" + note.ref['@ref'].id}>Details</Link></Grid>
 										</Grid>
 									</h4>
 									{renderPrimaryImage(note.data.images)}
 									{renderNoteBody(note.data.body)}
 									{renderNoteBullets(note.data.bullets, noteIndex)}
-									{/* <Grid container mb={1}>
-										<Grid item xs={12} align="right">
-											<sub>
-												<i>{note.data.author || "anonymous"} &bull; {renderTimestamp(note.ts / 1000)}</i>
-											</sub>
-										</Grid>
-									</Grid> */}
 
 								</Card>
 							</Grid>

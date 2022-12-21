@@ -10,11 +10,12 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
+import Link from '@mui/material/Link';
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
 import { Note as NoteModel } from './../../lib/models'
-import { renderStatus, renderTeamIcons } from './../../lib/render'
-import { fetchNotes } from './../../lib/queries''
+import { renderStatus, renderTeamIcons, renderTimestamp } from './../../lib/render'
+import { fetchNotes } from './../../lib/queries'
 import { NflTeams as teams, weeks } from './../../lib/nfl'
 
 const alertStatus = {
@@ -34,7 +35,6 @@ export default class Notes extends React.Component {
     constructor(props) {
         super(props)
 
-		console.log('Props')
         this.state = {
 			status: null,
 			editorStatus: editorStatus.CLOSED,
@@ -158,7 +158,27 @@ export default class Notes extends React.Component {
 	 * @returns 
 	 */
 	renderWeekPicker() {
-		return ('')
+		return (
+			<Grid item xs={6} align="center">
+				Week:&nbsp;
+				<Select
+					labelId="week-nav-label"
+					id="new-note-week"
+					name="week"
+					value="16"
+				>
+					{
+						weeks.map((week) => {
+							return (
+								<MenuItem key={week.value} value={week.value}>
+									<Link href={"/notes/" + week.value} sx={{textDecoration: "none"}}>{week.label}</Link>
+								</MenuItem>
+							)
+						})
+					}
+				</Select>
+			</Grid>
+		)
 	}
 
 	/**
@@ -261,33 +281,6 @@ export default class Notes extends React.Component {
 		}
 	}
 
-	renderTimestamp(ts) {
-		const date = new Date(ts)
-		
-		let hours = date.getHours() % 12
-		
-		if (hours === 0) {
-			hours = 12
-		}
-
-		let minutes = date.getMinutes()
-
-		if ((minutes + "").length === 1) {
-			minutes = "0" + minutes
-		}
-
-		const dateOutput = [
-			date.getMonth() + 1,
-			date.getDate(),
-			date.getFullYear()
-		].join('/')
-
-		const time = " " + hours + ":" + minutes
-		const amPm = (date.getHours() / 12 > 0) ? "pm" : "am"
-		
-		return "".concat(dateOutput, time, amPm)
-	}
-
 	renderPrimaryImage(images) {
 		if (images && images[0]) {
 			const imgSrc = `./uploads/${images[0]}`
@@ -355,7 +348,7 @@ export default class Notes extends React.Component {
 									<Grid container mb={1}>
 										<Grid item xs={12} align="right">
 											<sub>
-												<i>{ note.data.author || "anonymous" } &bull; { this.renderTimestamp(note.ts/1000) }</i>
+												<i>{ note.data.author || "anonymous" } &bull; { renderTimestamp(note.ts/1000) }</i>
 											</sub>
 										</Grid>
 									</Grid>
@@ -379,16 +372,17 @@ export default class Notes extends React.Component {
 
 				<h1 className={styles.title}>NFL Insights</h1>
 
-				<Container align="center" sx={{mt:2, mb: 2}}>
-					<Button variant="outlined" endIcon={<PostAddIcon />} onClick={this.handleAddNoteToggle}>
-						{this.state.editorButtonText}
-					</Button>
-				</Container>
-
-				{
-					/** Week Picker */
-					// this.renderWeekPicker() 
-				}
+				<Grid container align="center" direction="row" alignItems="center" sx={{mt:2, mb: 2}}>
+					<Grid item xs={6}>
+						<Button variant="outlined" endIcon={<PostAddIcon />} onClick={this.handleAddNoteToggle}>
+							{this.state.editorButtonText}
+						</Button>
+					</Grid>
+					{
+						/** Week Picker */
+						this.renderWeekPicker() 
+					}
+				</Grid>
 
 				{
 					/** New Note */
