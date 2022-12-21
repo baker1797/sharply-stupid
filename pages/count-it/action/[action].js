@@ -143,9 +143,6 @@ export default class CountItAction extends React.Component {
 	 * @returns 
 	 */
 	renderActionDetails(actionType) {
-		// console.log('renderActionDetails')
-		// console.log(actionType)
-	
 		switch(actionType) {
 			case 'watch':
 				return <WatchInput></WatchInput>

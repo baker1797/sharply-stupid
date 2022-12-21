@@ -20,10 +20,6 @@ export default class CountItLeaderboard extends React.Component {
     }
 
     render() {
-
-		// console.log('Bets :: render')
-		// console.log(data)
-
 		// TODO: merge this index file with [week] or extract the main render components
 
 		return (

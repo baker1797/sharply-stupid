@@ -10,25 +10,19 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import Link from '@mui/material/Link';
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
 import { Note as NoteModel, authors} from './../../lib/models'
-import { renderStatus, renderTeamIcons, renderTimestamp } from './../../lib/render'
+import {
+	alertStatus,
+	editorStatus,
+	renderNotes,
+	renderStatus,
+	renderTeamIcons,
+	renderWeekPicker
+} from './../../lib/render'
 import { fetchNotes } from './../../lib/queries'
 import { NflTeams as teams, weeks } from './../../lib/nfl'
-
-const alertStatus = {
-	PROCESSING: 'processing',
-	SUCCESS: 'success',
-	ERROR: 'error'
-}
-
-const editorStatus = {
-	OPEN: 'open',
-	CLOSED: 'closed'
-}
-
 
 export default class Notes extends React.Component {
 
@@ -112,8 +106,6 @@ export default class Notes extends React.Component {
 	 * @returns 
 	 */
     async handleSubmit(event) {
-        console.log('/pages/notes/create: handleSubmit')
-
         if (alertStatus.PROCESSING === this.state.status) {
             return
         }
@@ -128,7 +120,6 @@ export default class Notes extends React.Component {
 				NoteModel({
 					week: this.state.newNote.week,
 					author: this.state.newNote.author,
-					// author: document.getElementById('new-note-author').value,
 					title: document.getElementById('new-note-title').value,
 					body: document.getElementById('new-note-body').value,
 					teamTags: this.state.newNote.teamTags
@@ -147,8 +138,6 @@ export default class Notes extends React.Component {
 
 				const updatedNotes = await fetchNotes();
 
-				console.log(updatedNotes)
-
 				this.setState({
 					notes: updatedNotes
 				})
@@ -166,35 +155,6 @@ export default class Notes extends React.Component {
         })
 
     }
-
-	/**
-	 * Filter Notes by a given week
-	 * 
-	 * @returns 
-	 */
-	renderWeekPicker() {
-		return (
-			<Grid item xs={6} align="center">
-				Week:&nbsp;
-				<Select
-					labelId="week-nav-label"
-					id="new-note-week"
-					name="week"
-					value="16"
-				>
-					{
-						weeks.map((week) => {
-							return (
-								<MenuItem key={week.value} value={week.value}>
-									<Link href={"/notes/" + week.value} sx={{textDecoration: "none"}}>{week.label}</Link>
-								</MenuItem>
-							)
-						})
-					}
-				</Select>
-			</Grid>
-		)
-	}
 
 	/**
 	 * Render the new Note entry form
@@ -313,81 +273,6 @@ export default class Notes extends React.Component {
 		}
 	}
 
-	renderPrimaryImage(images) {
-		if (images && images[0]) {
-			const imgSrc = `./uploads/${images[0]}`
-
-			return (
-				<a href={imgSrc} target="_blank" rel="noreferrer">
-					<img src={imgSrc} width="100%"/>
-				</a>
-			)
-		}
-	}
-
-	renderNoteBody(body) {
-		if (body && body.length) {
-			return <p style={{whiteSpace: "pre-line"}}>{body}</p>
-		}
-	}
-
-	renderNoteBullets(bullets, noteIndex) {
-		if (bullets && bullets.length > 0) {
-			return (
-				<ul>
-					{
-						bullets.map((bullet, bulletIndex) => {
-							return (
-								<li key={noteIndex + "_" + bulletIndex}>{bullet.body}</li>
-							)
-						})
-					}
-				</ul>
-			)
-		}
-	}
-
-	renderNotes() {
-
-		if (!this.state.notes || this.state.notes.length <= 0) {
-			return (
-				<Container>No Notes</Container>
-			)
-		}
-
-		return (
-			<Grid container spacing={{ xs: 2, sm: 2, md: 3 }} sx={{mb:4}}>
-				{
-					this.state.notes.sort((a,b) => b.ts - a.ts).map((note, noteIndex) => {
-						return (
-							<Grid item xs={12} sm={6} md={4} lg={3} key={"note_" + noteIndex}>
-								<Card sx={{pl:2, pr:2, position: "relative"}}>
-									<h4>
-										<Grid container>
-											<Grid item xs={1} sm={2}>{ renderTeamIcons(note.data.teamTags) }</Grid>
-											<Grid item xs={11} sm={10}>{note.data.title}</Grid>
-										</Grid>
-									</h4>
-									{ this.renderPrimaryImage(note.data.images) }
-									{ this.renderNoteBody(note.data.body) }
-									{ this.renderNoteBullets(note.data.bullets, noteIndex) }
-									<Grid container mb={1}>
-										<Grid item xs={12} align="right">
-											<sub>
-												<i>{ note.data.week ? "Week: " + note.data.week : '' } &bull; { note.data.author || "anonymous" } &bull; { renderTimestamp(note.ts/1000) }</i>
-											</sub>
-										</Grid>
-									</Grid>
-									
-								</Card>
-							</Grid>
-						)
-					})
-				}
-			</Grid>
-		)
-	}
-
 	render () {
 		return (
 			<div className={styles.container}>
@@ -396,7 +281,7 @@ export default class Notes extends React.Component {
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
 
-				<h1 className={styles.title}>NFL Insights</h1>
+				<h1 align="center">NFL Insights</h1>
 
 				<Grid container align="center" direction="row" alignItems="center" sx={{mt:2, mb: 2}}>
 					<Grid item xs={6}>
@@ -404,21 +289,13 @@ export default class Notes extends React.Component {
 							{this.state.editorButtonText}
 						</Button>
 					</Grid>
-					{
-						/** Week Picker */
-						this.renderWeekPicker() 
-					}
+
+					{ renderWeekPicker("16") }
 				</Grid>
 
-				{
-					/** New Note */
-					this.renderEditor() 
-				}
+				{ this.renderEditor() }
 
-				{
-					/** New Note */
-					this.renderNotes()
-				}
+				{ renderNotes(this.state.notes, 'ts') }
 			</div>
 		)
 	}
