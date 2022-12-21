@@ -3,7 +3,7 @@ import Head from 'next/head'
 import styles from '/styles/Home.module.css'
 import Container from '@mui/material/Container';
 import NavBottom from './../components/nav-bottom';
-import { createApiRoute } from './../../../lib/helpers'
+import { createApiRoute } from './../../../lib/queries'
 
 export default class CountItLeaderboard extends React.Component {
 

@@ -1,4 +1,4 @@
-import { createDb } from  '../../../lib/helpers'
+import { createDb } from  '../../../lib/queries'
 
 export default async (req, res) => {
     try {

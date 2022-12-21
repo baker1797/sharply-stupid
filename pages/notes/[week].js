@@ -10,18 +10,17 @@ import TextField from '@mui/material/TextField';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
-import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
 import { Note as NoteModel } from '../../lib/models'
 import {
 	renderStatus,
-	fetchMatches,
 	renderMatchupTimestamp,
 	renderNoteBullets,
 	renderNoteBody,
 	renderPrimaryImage,
 	renderTeamIcon
-} from '../../lib/helpers'
+} from '../../lib/render'
+import { fetchMatches } from '../../lib/queries'
 import { NflTeams as teams, weeks } from '../../lib/nfl'
 
 const alertStatus = {

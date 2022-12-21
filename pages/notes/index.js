@@ -13,7 +13,8 @@ import Button from '@mui/material/Button';
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
 import { Note as NoteModel } from './../../lib/models'
-import { renderStatus, fetchNotes, renderTeamIcons } from './../../lib/helpers'
+import { renderStatus, renderTeamIcons } from './../../lib/render'
+import { fetchNotes } from './../../lib/queries''
 import { NflTeams as teams, weeks } from './../../lib/nfl'
 
 const alertStatus = {

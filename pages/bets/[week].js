@@ -5,7 +5,7 @@ import styles from '/styles/Home.module.css'
 import MatchupCard from './components/bet'
 import Container from '@mui/material/Container';
 import NavBottom from './components/nav-bottom';
-import { createApiRoute } from './../../lib/helpers'
+import { createApiRoute } from './../../lib/queries'
 
 export default function WeeklyBets({ data }) {
 

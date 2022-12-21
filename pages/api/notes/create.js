@@ -1,4 +1,4 @@
-import { createDb, parseInputFromRequestBody } from './../../../lib/helpers'
+import { createDb, parseInputFromRequestBody } from './../../../lib/queries'
 import { Note as NoteModel } from './../../../lib/models'
 
 export default async (req, res) => {

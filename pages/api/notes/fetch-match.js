@@ -1,4 +1,4 @@
-import { createDb } from './../../../lib/queries'
+import { createDb } from '../../../lib/render'
 
 // TODO: this collection param isn't configured from "fetch" in /bets/index
 export default async (req, res) => {
@@ -11,13 +11,7 @@ export default async (req, res) => {
 
 	await db.client.query(
 		db.q.Map(
-			db.q.Paginate(
-				db.q.Match(
-					db.q.Index('all_notes'),
-					// reqBody.week ? parseInt(reqBody.week) : null
-				),
-				{ size: 100 }
-			),
+			db.q.Get(db.q.Ref(db.q.Collection('matches'), '351617454643871830')),
 			db.q.Lambda('ref', db.q.Get(db.q.Var('ref')))
 		)
 	)

@@ -1,4 +1,4 @@
-import { createDb } from './../../../lib/helpers'
+import { createDb } from './../../../lib/queries'
 
 // TODO: this collection param isn't configured from "fetch" in /bets/index
 export default async (req, res) => {    

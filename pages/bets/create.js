@@ -9,7 +9,7 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import NavBottom from './components/nav-bottom';
-import { renderStatus } from './../../lib/helpers'
+import { renderStatus } from './../../lib/render'
 
 export default class NewBetCard extends React.Component {
 

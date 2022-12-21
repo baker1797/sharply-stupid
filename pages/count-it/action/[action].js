@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import NavBottom from './../components/nav-bottom';
 import WatchInput from './../components/WatchInput';
-import { renderStatus } from './../../../lib/helpers'
+import { renderStatus } from './../../../lib/render'
 
 export default class CountItAction extends React.Component {
 

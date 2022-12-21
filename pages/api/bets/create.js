@@ -1,5 +1,5 @@
 import hash from 'object-hash'
-import { createDb, parseInputFromRequestBody } from './../../../lib/helpers'
+import { createDb, parseInputFromRequestBody } from './../../../lib/queries'
 
 export default async (req, res) => {
     try {
