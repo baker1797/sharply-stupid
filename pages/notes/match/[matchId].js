@@ -63,7 +63,7 @@ export default class Matchup extends React.Component {
 
 		if (!this.state.notes || this.state.notes.length <= 0) {
 			return (
-				<Container>No Notes</Container>
+				<div>No Notes</div>
 			)
 		}
 
