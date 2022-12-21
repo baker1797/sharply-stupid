@@ -2,7 +2,6 @@ import * as React from 'react'
 import Head from 'next/head'
 import Grid from '@mui/material/Grid';
 import styles from '/styles/Home.module.css'
-import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -290,7 +289,7 @@ export default class Notes extends React.Component {
 						</Button>
 					</Grid>
 
-					{ renderWeekPicker("16") }
+					{ renderWeekPicker("all") }
 				</Grid>
 
 				{ this.renderEditor() }

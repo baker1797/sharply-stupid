@@ -5,29 +5,9 @@ import Container from '@mui/material/Container';
 import styles from '/styles/Home.module.css'
 import { fetchMatch, fetchNotesByTeamId } from '../../../lib/queries'
 import {
-	renderMatchupTimestamp,
-	renderNotes,
-	renderTeamIcon
+	renderMatchDetails,
+	renderNotes
 } from '../../../lib/render'
-
-const renderMatch = (matchData) => {
-	return (
-		<Grid container>
-			<Grid item xs={4} align="center" sx={{ fontSize: "small" }}>
-				{renderTeamIcon(matchData.awayTeamId, 48)}
-				<div>{matchData.pregameHomeSpread < 0 ? '' : matchData.pregameHomeSpread*-1}</div>
-			</Grid>
-			<Grid item xs={4} align="center">
-				{renderMatchupTimestamp(matchData.gameTime)}
-			</Grid>
-			<Grid item xs={4} align="center" sx={{ fontSize: "small" }}>
-				{renderTeamIcon(matchData.homeTeamId, 48)}
-				<div>{matchData.pregameHomeSpread > 0 ? '' : matchData.pregameHomeSpread}</div>
-			</Grid>
-			<Grid item xs={12} align="center">Total: {matchData.pregameTotal}</Grid>
-		</Grid>
-	)
-}
 
 export default class Matchup extends React.Component {
 
@@ -42,6 +22,7 @@ export default class Matchup extends React.Component {
 	}
 
 	render() {
+
 		return (
 			<div className={styles.container}>
 				<Head>
@@ -52,14 +33,14 @@ export default class Matchup extends React.Component {
 				<h2 align="center" style={{padding: "20px 0"}}>Matchup Details</h2>
 
 				<Container>
-					{ renderMatch(this.state.match) }
+					{ renderMatchDetails(this.state.match) }
 				</Container>
 
 				<Grid container>
 					<Grid item xs={12}><hr></hr></Grid>
 					<Grid item xs={12} align="center">
 						<h2>Insights</h2>
-						{ renderNotes(this.state.notes) }
+						{ renderNotes(this.state.notes.filter(note => note.data.week <= this.state.match.week)) }
 					</Grid>
 				</Grid>
 			</div>

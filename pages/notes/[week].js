@@ -6,11 +6,7 @@ import Container from '@mui/material/Container';
 import Card from '@mui/material/Card';
 import Link from '@mui/material/Link';
 import {
-	renderMatchupTimestamp,
-	renderNoteBody,
-	renderNoteBullets,
-	renderPrimaryImage,
-	renderTeamIcon,
+	renderMatchDetails,
 	renderWeekPicker
 } from '../../lib/render'
 import { fetchMatches } from '../../lib/queries'
@@ -32,31 +28,13 @@ const renderMatches = (matches) => {
 	return (
 		<Grid container spacing={{ xs: 2, sm: 2, md: 3 }} sx={{ mb: 4 }}>
 			{
-				matches.sort((a, b) => a.data.gameTime - b.data.gameTime).map((note, noteIndex) => {
+				matches.sort((a, b) => a.data.gameTime - b.data.gameTime).map((matchData, matchIndex) => {
 					return (
-						<Grid item xs={12} sm={6} lg={4} key={"note_" + noteIndex}>
-							<Card sx={{ pl: 2, pr: 2, position: "relative" }}>
-								<h4>
-									<Grid container>
-										<Grid item xs={4} align="center" sx={{ fontSize: "small" }}>
-											{renderTeamIcon(note.data.awayTeamId, 48)}
-											<div>{note.data.pregameHomeSpread < 0 ? '' : note.data.pregameHomeSpread*-1}</div>
-										</Grid>
-										<Grid item xs={4} align="center">
-											{renderMatchupTimestamp(note.data.gameTime)}
-										</Grid>
-										<Grid item xs={4} align="center" sx={{ fontSize: "small" }}>
-											{renderTeamIcon(note.data.homeTeamId, 48)}
-											<div>{note.data.pregameHomeSpread > 0 ? '' : note.data.pregameHomeSpread}</div>
-										</Grid>
-										<Grid item xs={12} align="center">Total: {note.data.pregameTotal}</Grid>
-										<Grid item xs={12} align="center"><Link href={"/notes/match/" + note.ref['@ref'].id}>Details</Link></Grid>
-									</Grid>
-								</h4>
-								{renderPrimaryImage(note.data.images)}
-								{renderNoteBody(note.data.body)}
-								{renderNoteBullets(note.data.bullets, noteIndex)}
+						<Grid item xs={12} sm={6} lg={4} key={"match_" + matchIndex}>
+							<Card sx={{ pl: 2, pr: 2, pb: 2, position: "relative" }}>
+								{ renderMatchDetails(matchData.data) }
 
+								<Grid item xs={12} align="center" sx={{ fontWeight: "bold", mt: 2 }}><Link href={"/notes/match/" + matchData.ref['@ref'].id}>Details</Link></Grid>
 							</Card>
 						</Grid>
 					)

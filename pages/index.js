@@ -39,7 +39,7 @@ export default class Home extends React.Component {
 
 							<Button variant="contained">
 								<Link href="/notes">
-									Blog
+									NFL Insights
 								</Link>
 							</Button>
 						</Stack>
