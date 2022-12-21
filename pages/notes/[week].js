@@ -12,9 +12,17 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import PostAddIcon from '@mui/icons-material/PostAdd'
 import SendIcon from '@mui/icons-material/Send'
-import { Note as NoteModel } from './../../lib/models'
-import { renderStatus, fetchNotes, renderTeamIcons } from './../../lib/helpers'
-import { NflTeams as teams, weeks } from './../../lib/nfl'
+import { Note as NoteModel } from '../../lib/models'
+import {
+	renderStatus,
+	fetchMatches,
+	renderMatchupTimestamp,
+	renderNoteBullets,
+	renderNoteBody,
+	renderPrimaryImage,
+	renderTeamIcon
+} from '../../lib/helpers'
+import { NflTeams as teams, weeks } from '../../lib/nfl'
 
 const alertStatus = {
 	PROCESSING: 'processing',
@@ -27,20 +35,21 @@ const editorStatus = {
 	CLOSED: 'closed'
 }
 
-
 export default class Notes extends React.Component {
 
-    constructor(props) {
-        super(props)
+	constructor(props) {
+		super(props)
 
-		console.log('Props')
-        this.state = {
+		this.state = {
 			status: null,
 			editorStatus: editorStatus.CLOSED,
 			editorButtonText: 'Add Note',
 			notes: this.props.notes,
-			category: 'gambling',
-			newNote: NoteModel()
+			// category: 'gambling',
+			week: this.props.week,
+			newNote: NoteModel({
+				week: this.props.week
+			})
 		}
 
 		this.handleSelectChange = this.handleSelectChange.bind(this)
@@ -61,7 +70,7 @@ export default class Notes extends React.Component {
 	handleTeamTagSelectChange(event) {
 		// TODO - "push" is desired, but the UI doesn't support it
 		// this.state.newNote.teamTags.push(event.target.value)
-		
+
 		this.setState({
 			newNote: {
 				...this.state.newNote,
@@ -98,20 +107,20 @@ export default class Notes extends React.Component {
 	 * @param {*} event 
 	 * @returns 
 	 */
-    async handleSubmit(event) {
-        console.log('/pages/notes/create: handleSubmit')
+	async handleSubmit(event) {
+		console.log('/pages/notes/create: handleSubmit')
 
-        if (alertStatus.PROCESSING === this.state.status) {
-            return
-        }
+		if (alertStatus.PROCESSING === this.state.status) {
+			return
+		}
 
-        this.setState({
-            status: alertStatus.PROCESSING
-        })
-		
-        fetch('/api/notes/create', {
-            method: 'POST',
-            body: JSON.stringify(
+		this.setState({
+			status: alertStatus.PROCESSING
+		})
+
+		fetch('/api/notes/create', {
+			method: 'POST',
+			body: JSON.stringify(
 				NoteModel({
 					week: this.state.newNote.week,
 					author: document.getElementById('new-note-author').value,
@@ -120,36 +129,29 @@ export default class Notes extends React.Component {
 					teamTags: this.state.newNote.teamTags
 				})
 			)
-        }).then(() => {
+		}).then(() => {
 			this.setState({
 				status: alertStatus.SUCCESS
 			})
 
-			setTimeout(async () => {
+			setTimeout(() => {
 				this.setState({
 					editorStatus: editorStatus.CLOSED,
 					editorButtonText: 'Add Note'
 				})
-
-				const updatedNotes = await fetchNotes();
-
-				this.setState({
-					notes: updatedNotes.props.notes
-				})
-
 			}, 750)
-			
+
 		}).catch((error) => {
 
-            this.setState({
-                status: alertStatus.ERROR
-            })
+			this.setState({
+				status: alertStatus.ERROR
+			})
 
-            console.log('Your note failed to submit')
+			console.log('Your note failed to submit')
 			console.log(error)
-        })
+		})
 
-    }
+	}
 
 	/**
 	 * Filter Notes by a given week
@@ -169,7 +171,7 @@ export default class Notes extends React.Component {
 		if (this.state.editorStatus === editorStatus.OPEN) {
 
 			return (
-				<Card sx={{mb: 2, p: 2}}>
+				<Card sx={{ mb: 2, p: 2 }}>
 					<Grid container align="center" spacing={1.5}>
 						<Grid item xs={12} md={6}>
 							<FormControl fullWidth variant="standard">
@@ -189,7 +191,7 @@ export default class Notes extends React.Component {
 								</Select>
 							</FormControl>
 						</Grid>
-	
+
 						<Grid item xs={12} md={6}>
 							<FormControl fullWidth variant="standard">
 								<InputLabel id="team-label">Team</InputLabel>
@@ -201,7 +203,7 @@ export default class Notes extends React.Component {
 								>
 									{
 										teams.map((team) => {
-											return <MenuItem key={team.key} value={team.key}>{renderTeamIcons([team.key])}&nbsp;{team.location} {team.name}</MenuItem>
+											return <MenuItem key={team.key} value={team.key}>{renderTeamIcon(team.key)}&nbsp;{team.location} {team.name}</MenuItem>
 										})
 									}
 								</Select>
@@ -250,7 +252,7 @@ export default class Notes extends React.Component {
 						</Grid>
 
 						<Grid item xs={12}>
-							{ renderStatus(this.state.status, 'Note') }
+							{renderStatus(this.state.status, 'Note')}
 						</Grid>
 					</Grid>
 				</Card>
@@ -260,66 +262,6 @@ export default class Notes extends React.Component {
 		}
 	}
 
-	renderTimestamp(ts) {
-		const date = new Date(ts)
-		
-		let hours = date.getHours() % 12
-		
-		if (hours === 0) {
-			hours = 12
-		}
-
-		let minutes = date.getMinutes()
-
-		if ((minutes + "").length === 1) {
-			minutes = "0" + minutes
-		}
-
-		const dateOutput = [
-			date.getMonth() + 1,
-			date.getDate(),
-			date.getFullYear()
-		].join('/')
-
-		const time = " " + hours + ":" + minutes
-		const amPm = (date.getHours() / 12 > 0) ? "pm" : "am"
-		
-		return "".concat(dateOutput, time, amPm)
-	}
-
-	renderPrimaryImage(images) {
-		if (images && images[0]) {
-			const imgSrc = `./uploads/${images[0]}`
-
-			return (
-				<a href={imgSrc} target="_blank" rel="noreferrer">
-					<img src={imgSrc} width="100%"/>
-				</a>
-			)
-		}
-	}
-
-	renderNoteBody(body) {
-		if (body && body.length) {
-			return <p style={{whiteSpace: "pre-line"}}>{body}</p>
-		}
-	}
-
-	renderNoteBullets(bullets, noteIndex) {
-		if (bullets && bullets.length > 0) {
-			return (
-				<ul>
-					{
-						bullets.map((bullet, bulletIndex) => {
-							return (
-								<li key={noteIndex + "_" + bulletIndex}>{bullet.body}</li>
-							)
-						})
-					}
-				</ul>
-			)
-		}
-	}
 
 	renderNotes() {
 
@@ -330,35 +272,44 @@ export default class Notes extends React.Component {
 		}
 
 		return (
-			<Grid container spacing={{ xs: 2, sm: 2, md: 3 }} sx={{mb:4}}>
+			<Grid container spacing={{ xs: 2, sm: 2, md: 3 }} sx={{ mb: 4 }}>
 				{
-					this.state.notes.sort((a,b) => b.ts - a.ts).map((note, noteIndex) => {
+					this.state.notes.sort((a, b) => a.data.gameTime - b.data.gameTime).map((note, noteIndex) => {
 						return (
 							<Grid item xs={12} sm={6} lg={4} key={"note_" + noteIndex}>
-								<Card sx={{pl:2, pr:2, position: "relative"}}>
+								<Card sx={{ pl: 2, pr: 2, position: "relative" }}>
 									<h4>
 										<Grid container>
-											<Grid item xs={1}>{ renderTeamIcons(note.data.teamTags) }</Grid>
-											<Grid item xs={8}>{note.data.title}</Grid>
-											<Grid item xs={3} align="right" sx={{fontSize: "small", fontWeight: "light"}}>
-												{ note.data.week ? "Week: " + note.data.week : '' }
-												{
-													// TODO render playoff week titles
-												}
+											<Grid item xs={4} align="center" sx={{ fontSize: "small" }}>
+												{renderTeamIcon(note.data.awayTeamId, 48)}
+												<div>{note.data.pregameHomeSpread < 0 ? '' : note.data.pregameHomeSpread*-1}</div>
 											</Grid>
+											<Grid item xs={4} align="center">
+												{renderMatchupTimestamp(note.data.gameTime)}
+											</Grid>
+											<Grid item xs={4} align="center" sx={{ fontSize: "small" }}>
+												{renderTeamIcon(note.data.homeTeamId, 48)}
+												<div>{note.data.pregameHomeSpread > 0 ? '' : note.data.pregameHomeSpread}</div>
+											</Grid>
+											{/* <Grid item xs={12} align="center">Home Spread</Grid>
+											<Grid item xs={12} align="center" sx={{ fontSize: "small", fontWeight: "light" }}></Grid> */}
+											<Grid item xs={12} align="center">Total: {note.data.pregameTotal}</Grid>
+											<Grid item xs={12}><hr></hr></Grid>
+											<Grid item xs={12}>Notes</Grid>
+											<Grid item xs={8}>{note.data.title}</Grid>
 										</Grid>
 									</h4>
-									{ this.renderPrimaryImage(note.data.images) }
-									{ this.renderNoteBody(note.data.body) }
-									{ this.renderNoteBullets(note.data.bullets, noteIndex) }
-									<Grid container mb={1}>
+									{renderPrimaryImage(note.data.images)}
+									{renderNoteBody(note.data.body)}
+									{renderNoteBullets(note.data.bullets, noteIndex)}
+									{/* <Grid container mb={1}>
 										<Grid item xs={12} align="right">
 											<sub>
-												<i>{ note.data.author || "anonymous" } &bull; { this.renderTimestamp(note.ts/1000) }</i>
+												<i>{note.data.author || "anonymous"} &bull; {renderTimestamp(note.ts / 1000)}</i>
 											</sub>
 										</Grid>
-									</Grid>
-									
+									</Grid> */}
+
 								</Card>
 							</Grid>
 						)
@@ -368,7 +319,7 @@ export default class Notes extends React.Component {
 		)
 	}
 
-	render () {
+	render() {
 		return (
 			<div className={styles.container}>
 				<Head>
@@ -376,22 +327,22 @@ export default class Notes extends React.Component {
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
 
-				<h1 className={styles.title}>NFL Insights</h1>
+				<h1 className={styles.title}>Week {this.state.week}</h1>
 
-				<Container align="center" sx={{mt:2, mb: 2}}>
+				{/* <Container align="center" sx={{ mt: 2, mb: 2 }}>
 					<Button variant="outlined" endIcon={<PostAddIcon />} onClick={this.handleAddNoteToggle}>
 						{this.state.editorButtonText}
 					</Button>
-				</Container>
+				</Container> */}
 
 				{
 					/** Week Picker */
-					// this.renderWeekPicker() 
+					// this.renderWeekPicker()
 				}
 
 				{
 					/** New Note */
-					this.renderEditor() 
+					// this.renderEditor()
 				}
 
 				{
@@ -403,12 +354,17 @@ export default class Notes extends React.Component {
 	}
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps({ query }) {
 
-	const notes = await fetchNotes()
+	console.log('getServerSideProps==')
+	
+	const notes = await fetchMatches(query.week)
 
+	console.log(notes)
+	
 	return {
 		props: {
+			week: query.week,
 			notes
 		}
 	}

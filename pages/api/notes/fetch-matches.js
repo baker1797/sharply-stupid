@@ -1,4 +1,4 @@
-import { createDb } from './../../../lib/helpers'
+import { createDb } from '../../../lib/helpers'
 
 // TODO: this collection param isn't configured from "fetch" in /bets/index
 export default async (req, res) => {
@@ -13,7 +13,8 @@ export default async (req, res) => {
 		db.q.Map(
 			db.q.Paginate(
 				db.q.Match(
-					db.q.Index('all_notes'),
+					db.q.Index('all_matches'),
+					// db.q.Index(reqBody.week ? 'matches_by_week' : 'all_matches'),
 					// reqBody.week ? parseInt(reqBody.week) : null
 				),
 				{ size: 100 }
