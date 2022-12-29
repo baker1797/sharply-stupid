@@ -124,24 +124,30 @@ export default class Notes extends React.Component {
 					teamTags: this.state.newNote.teamTags
 				})
 			)
-        }).then(() => {
+        }).then(async () => {
 			this.setState({
 				status: alertStatus.SUCCESS
 			})
 
-			setTimeout(async () => {
+			const updatedNotes = await fetchNotes();
+
+			setTimeout(() => {
 				this.setState({
 					editorStatus: editorStatus.CLOSED,
-					editorButtonText: 'Add Note'
+					editorButtonText: 'Add Note',
+					newNote: NoteModel()
 				})
 
-				const updatedNotes = await fetchNotes();
+				console.log(updatedNotes)
 
-				this.setState({
-					notes: updatedNotes
-				})
-
-			}, 750)
+				if (updatedNotes) {
+					this.setState({
+						notes: updatedNotes
+					})
+				} else {
+					console.log('broken')
+				}
+			}, 1000)
 			
 		}).catch((error) => {
 
